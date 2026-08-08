@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact · Perú Crafted Experiences</title>
+<meta name="description" content="Start your enquiry. Message Patricia on WhatsApp or share a few details and she'll craft a bespoke Peru itinerary around you." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .field { display:flex; flex-direction:column; gap:.4rem; }
+  .field label { font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--charcoal-soft); }
+  .field input, .field select, .field textarea {
+    font:inherit; color:var(--charcoal); background:var(--ivory-50);
+    border:1px solid var(--stone-line); border-radius:4px; padding:.75rem .9rem;
+    transition:border-color .3s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline:none; border-color:var(--gold); }
+  .form-grid { display:grid; gap:1.1rem; }
+  @media (min-width:560px){ .form-grid .two { grid-template-columns:1fr 1fr; display:grid; gap:1.1rem; } }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<main id="main">
+
+  <section class="pagehero" style="min-height:48vh">
+    <div class="pagehero__media"><img src="assets/img/1701723128444-9c08bab40496.jpg" alt="A Peruvian market" fetchpriority="high"></div>
+    <div class="pagehero__wash"></div>
+    <div class="pagehero__inner">
+      <span class="eyebrow on-dark"><span class="chakana js-chakana" data-grad style="width:.9rem;height:.9rem"></span><span class="rule"></span>Contact</span>
+      <h1>Start your enquiry</h1>
+      <p>Tell me about the journey you're dreaming of, and I'll craft a bespoke Peru itinerary designed entirely around you.</p>
+    </div>
+  </section>
+
+  <section class="section bg-ivory-50">
+    <div class="container split" style="align-items:start">
+      <!-- details -->
+      <div class="stack gap-6 reveal">
+        <span class="eyebrow"><span class="chakana js-chakana" style="width:.9rem;height:.9rem"></span><span class="rule"></span>Talk to Patricia</span>
+        <h2 class="h-sec">A conversation, not a booking form</h2>
+        <p class="lede">The best journeys begin with a chat. Message me directly on WhatsApp, drop me an email, or share a few details and I'll be in touch personally.</p>
+        <div class="stack gap-4" style="margin-top:.5rem">
+          <a class="btn btn--wa js-wa" href="#" style="align-self:flex-start;padding-inline:1.6rem">Chat on WhatsApp</a>
+          <p class="muted">WhatsApp · <span class="js-wanum"></span></p>
+          <p class="muted">Email · <a class="tlink js-email" style="text-transform:none;letter-spacing:0;font-weight:400" href="#"><span class="u">administracion@visualgroup.net</span></a></p>
+        </div>
+        <div class="figure-frame" style="margin-top:1rem;max-width:22rem"><img src="assets/img/1523761415282-2106778cfb5a.jpg" alt="Patricia" loading="lazy"></div>
+      </div>
+
+      <!-- form -->
+      <div class="reveal" data-delay="1" style="background:var(--sand-soft);border:1px solid var(--stone-line);border-radius:6px;padding:clamp(1.5rem,4vw,2.5rem)">
+        <form class="form-grid js-enquiry-form">
+          <div class="two">
+            <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" required></div>
+            <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" name="email" required></div>
+          </div>
+          <div class="two">
+            <div class="field"><label for="f-when">When (approx.)</label><input id="f-when" name="when" placeholder="e.g. May 2026"></div>
+            <div class="field"><label for="f-party">Travellers</label><input id="f-party" name="party" placeholder="e.g. 2 adults"></div>
+          </div>
+          <div class="field"><label for="f-style">Travel style</label>
+            <select id="f-style" name="style">
+              <option>Budget-friendly &amp; local</option>
+              <option>Comfortable mid-range</option>
+              <option>Premium &amp; boutique</option>
+              <option>Luxury &amp; private</option>
+              <option>Not sure yet — advise me</option>
+            </select>
+          </div>
+          <div class="field"><label for="f-msg">Tell me about your dream journey</label><textarea id="f-msg" name="message" rows="4" placeholder="Interests, must-sees, food you love, pace…"></textarea></div>
+          <button class="btn btn--gold" type="submit" style="width:100%">Send via WhatsApp ${arrow}</button>
+          <p class="muted" style="font-size:.78rem;text-align:center">Prefer email? Write to <a class="js-email" href="#" style="color:var(--terracotta)">administracion@visualgroup.net</a></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer class="footer"></footer>
+<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#d4a656"/><stop offset="100%" stop-color="#c46a4a"/>
+  </linearGradient></defs>
+  <rect width="120" height="120" rx="18" fill="#faf9f7"/>
+  <g>
+    <mask id="m"><rect width="120" height="120" fill="black"/>
+      <rect x="42" y="42" width="36" height="36" rx="2" fill="white"/>
+      <rect x="42" y="22" width="36" height="20" rx="2" fill="white"/>
+      <rect x="51" y="6" width="18" height="18" rx="2" fill="white"/>
+      <rect x="42" y="78" width="36" height="20" rx="2" fill="white"/>
+      <rect x="51" y="96" width="18" height="18" rx="2" fill="white"/>
+      <rect x="22" y="42" width="20" height="36" rx="2" fill="white"/>
+      <rect x="6" y="51" width="18" height="18" rx="2" fill="white"/>
+      <rect x="78" y="42" width="20" height="36" rx="2" fill="white"/>
+      <rect x="96" y="51" width="18" height="18" rx="2" fill="white"/>
+      <circle cx="60" cy="60" r="12" fill="black"/>
+    </mask>
+    <rect width="120" height="120" fill="url(#g)" mask="url(#m)"/>
+  </g>
+</svg>
