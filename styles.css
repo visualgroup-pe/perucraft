@@ -487,6 +487,37 @@ button { font: inherit; cursor: pointer; }
 }
 .jcard__body p { color: rgba(241,236,225,0.8); font-size: 0.98rem; flex: 1; }
 .jcard__foot { border-top: 1px solid rgba(250,249,247,0.1); padding-top: 1.25rem; }
+.jcard__note {
+  border-top: 1px solid rgba(250,249,247,0.1); padding-top: 1rem;
+  font-size: 0.8rem; line-height: 1.6; color: rgba(241,236,225,0.6);
+}
+.jcard__note strong { color: rgba(241,236,225,0.85); font-weight: 500; }
+
+/* day-by-day itinerary (journey detail pages) */
+.itin { list-style: none; }
+.itin__day {
+  display: grid; grid-template-columns: 9rem 1fr; gap: 1.5rem 2.5rem;
+  padding-block: 1.75rem; border-top: 1px solid var(--stone-line);
+}
+.itin__day:last-child { border-bottom: 1px solid var(--stone-line); }
+@media (max-width: 640px) { .itin__day { grid-template-columns: 1fr; gap: 0.5rem; } }
+.itin__no {
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--terracotta); padding-top: 0.35rem;
+}
+.itin__place { font-size: 1.4rem; }
+.itin__desc { color: var(--charcoal-soft); font-size: 1.02rem; line-height: 1.75; margin-top: 0.5rem; }
+
+/* generic "what's included" list */
+.included { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.included li {
+  position: relative; padding-left: 1.6rem; color: var(--charcoal-soft); font-size: 1rem;
+}
+.included li::before {
+  content: ""; position: absolute; left: 0; top: 0.55rem;
+  width: 0.5rem; height: 0.5rem; transform: rotate(45deg);
+  border: 1px solid var(--gold); background: rgba(212,160,55,0.15);
+}
 
 /* difference list */
 .diff-grid {
