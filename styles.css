@@ -350,8 +350,11 @@ button { font: inherit; cursor: pointer; }
 .hero__wash {
   position: absolute; inset: 0;
   background:
-    radial-gradient(120% 80% at 20% 100%, rgba(37,63,49,0.7), transparent 60%),
-    linear-gradient(to top, rgba(37,63,49,0.9), rgba(51,51,51,0.25) 45%, rgba(51,51,51,0.45));
+    radial-gradient(135% 95% at 12% 100%, rgba(20,33,26,0.9), transparent 52%),
+    linear-gradient(to top, rgba(15,26,20,0.94) 0%, rgba(37,63,49,0.62) 34%, rgba(51,51,51,0.28) 62%, rgba(51,51,51,0.5) 100%);
+}
+.hero__greca {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; opacity: 0.65;
 }
 .hero__inner {
   position: relative;
@@ -360,8 +363,11 @@ button { font: inherit; cursor: pointer; }
   width: 100%;
   padding: 10rem var(--gutter) clamp(3.5rem, 9vh, 7rem);
 }
-.hero__content { max-width: 46rem; color: var(--ivory-50); }
-.hero h1 { color: var(--ivory-50); margin-block: 1.4rem 0; }
+.hero__content {
+  max-width: 46rem; color: var(--ivory-50); position: relative; z-index: 2;
+  text-shadow: 0 1px 2px rgba(15,26,20,0.35), 0 2px 30px rgba(15,26,20,0.4);
+}
+.hero h1 { color: var(--ivory-50); margin-block: 1.4rem 0; text-shadow: 0 2px 44px rgba(0,0,0,0.4); }
 .hero__sub {
   font-family: var(--font-serif);
   font-style: italic;
@@ -567,9 +573,33 @@ button { font: inherit; cursor: pointer; }
 }
 .wm--float { animation: floaty 9s ease-in-out infinite; }
 @keyframes floaty {
-  0%, 100% { transform: translateY(0) rotate(45deg); }
-  50% { transform: translateY(-12px) rotate(45deg); }
+  0%, 100% { transform: translateY(0) rotate(43deg); }
+  50% { transform: translateY(-12px) rotate(48deg); }
 }
+/* slowly turning chakana — a quiet Andean sun */
+.spin-slow { animation: spin-slow 64s linear infinite; }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+/* animated greca (Andean fret that drifts sideways) */
+.greca--anim { animation: greca-drift 14s linear infinite; }
+@keyframes greca-drift { to { background-position-x: 48px; } }
+
+/* Andean textile band — a woven ribbon of brand colour, gently scrolling */
+.textile-band {
+  height: 6px; width: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--terracotta-deep) 0 10px,
+    var(--gold) 10px 14px,
+    var(--forest) 14px 26px,
+    var(--gold-soft) 26px 30px,
+    var(--terracotta) 30px 42px,
+    var(--sand-deep) 42px 46px
+  );
+  animation: textile-slide 5.5s linear infinite;
+}
+.textile-band--lg { height: 9px; }
+@keyframes textile-slide { from { background-position: 0 0; } to { background-position: 46px 0; } }
 
 /* marquee */
 .marquee { overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent); }
