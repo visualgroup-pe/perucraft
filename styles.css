@@ -274,9 +274,12 @@ button { font: inherit; cursor: pointer; }
   transition: background-size 0.4s var(--ease), color 0.3s;
 }
 .nav a:hover, .nav a.active { color: var(--charcoal); background-size: 100% 1px; }
-.site-header:not(.scrolled) .nav.on-hero a { color: rgba(250,249,247,0.85); }
-.site-header:not(.scrolled) .nav.on-hero a:hover,
-.site-header:not(.scrolled) .nav.on-hero a.active { color: var(--ivory-50); }
+.site-header:not(.scrolled) .nav.on-hero > a,
+.site-header:not(.scrolled) .nav.on-hero > .nav__item > a { color: rgba(250,249,247,0.85); }
+.site-header:not(.scrolled) .nav.on-hero > a:hover,
+.site-header:not(.scrolled) .nav.on-hero > a.active,
+.site-header:not(.scrolled) .nav.on-hero > .nav__item > a:hover,
+.site-header:not(.scrolled) .nav.on-hero > .nav__item > a.active { color: var(--ivory-50); }
 
 .header-cta { display: none; }
 .menu-btn {
