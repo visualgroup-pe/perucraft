@@ -20,11 +20,37 @@
       "assets/img/1523761415282-2106778cfb5a.jpg",
   };
   var NAV = [
-    { label: "Home", href: "index.html" },
-    { label: "The Story", href: "story.html" },
-    { label: "Experiences", href: "experiences.html" },
-    { label: "Journeys", href: "journeys.html" },
-    { label: "Contact", href: "contact.html" },
+    { label: "Home", href: "index.html", children: [
+      { label: "The Peruvian Way", href: "index.html#about" },
+      { label: "The Three Pillars", href: "index.html#experiences" },
+      { label: "Featured Journeys", href: "index.html#journeys" },
+      { label: "Why Travel With Us", href: "index.html#difference" },
+      { label: "Begin Your Journey", href: "index.html#enquire" },
+    ] },
+    { label: "The Story", href: "story.html", children: [
+      { label: "Meet Patricia", href: "story.html#patricia" },
+      { label: "Peru's Iconic Highlights", href: "story.html#highlights" },
+      { label: "The Amazon", href: "story.html#amazon" },
+      { label: "Culture & Celebration", href: "story.html#celebration" },
+    ] },
+    { label: "Experiences", href: "experiences.html", children: [
+      { label: "Culture", href: "experiences.html#culture" },
+      { label: "Gastronomy", href: "experiences.html#gastronomy" },
+      { label: "Crafted Travel", href: "experiences.html#crafted" },
+      { label: "Day Experiences from Lima", href: "experiences.html#day-experiences" },
+    ] },
+    { label: "Journeys", href: "journeys.html", children: [
+      { label: "The Crafted Collection", href: "journeys.html#collection" },
+      { label: "Grand Peru · 20 Days", href: "journey-grand-peru.html" },
+      { label: "Unforgettable Peru · 13 Days", href: "journey-unforgettable-peru.html" },
+      { label: "Majestic Peru · 10 Days", href: "journey-majestic-peru.html" },
+      { label: "Cusco Essentials · 3 Days", href: "journey-cusco-essentials.html" },
+    ] },
+    { label: "Contact", href: "contact.html", children: [
+      { label: "Start an Enquiry", href: "contact.html" },
+      { label: "Chat on WhatsApp", href: CONTACT.waHref, external: true },
+      { label: "Email Patricia", href: "mailto:" + CONTACT.email + "?subject=Bespoke%20Peru%20Journey%20Enquiry", external: true },
+    ] },
   ];
 
   /* ---------- chakana svg ---------- */
@@ -59,6 +85,7 @@
   /* ---------- small icons ---------- */
   var IC = {
     arrow: "<svg class='arrow' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5'><path d='M5 12h14M13 6l6 6-6 6'/></svg>",
+    caret: "<svg class='nav__caret' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>",
     menu: "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5'><path d='M3 6h18M3 12h18M3 18h18'/></svg>",
     close: "<svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5'><path d='M6 6l12 12M18 6L6 18'/></svg>",
     wa: "<svg width='20' height='20' viewBox='0 0 32 32' fill='currentColor'><path d='M16.04 4c-6.63 0-12 5.37-12 12 0 2.11.55 4.17 1.6 5.99L4 28l6.18-1.62A11.9 11.9 0 0 0 16.04 28c6.63 0 12-5.37 12-12s-5.37-12-12-12Zm0 21.82c-1.84 0-3.65-.5-5.22-1.43l-.37-.22-3.67.96.98-3.58-.24-.37a9.8 9.8 0 0 1-1.5-5.2c0-5.42 4.41-9.82 9.83-9.82 2.63 0 5.09 1.02 6.95 2.88a9.75 9.75 0 0 1 2.88 6.95c0 5.42-4.41 9.83-9.82 9.83Zm5.39-7.35c-.29-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.29-.77.96-.94 1.16-.17.2-.35.22-.64.07-.29-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.04-.17-.29-.02-.45.13-.6.13-.13.29-.35.44-.52.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.29-1.04 1.02-1.04 2.48 0 1.46 1.06 2.87 1.21 3.07.15.2 2.09 3.2 5.07 4.48.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.56-.35Z'/></svg>",
@@ -81,10 +108,38 @@
   }
 
   /* ---------- header ---------- */
+  function subAnchor(c) {
+    var ext = c.external ? ' target="_blank" rel="noopener"' : "";
+    return '<a href="' + c.href + '"' + ext + ">" + c.label + "</a>";
+  }
+
   function buildHeader() {
     var navLinks = NAV.map(function (n) {
       var active = n.href === path ? " active" : "";
+      if (n.children && n.children.length) {
+        return '<div class="nav__item has-sub">' +
+          '<a class="' + active.trim() + '" href="' + n.href + '" aria-haspopup="true">' + n.label + IC.caret + "</a>" +
+          '<div class="subnav"><div class="subnav__inner">' +
+            n.children.map(subAnchor).join("") +
+          "</div></div>" +
+        "</div>";
+      }
       return '<a class="' + active.trim() + '" href="' + n.href + '">' + n.label + "</a>";
+    }).join("");
+
+    var mobileLinks = NAV.map(function (n) {
+      if (n.children && n.children.length) {
+        return '<div class="m-group">' +
+          '<div class="m-row">' +
+            '<a href="' + n.href + '">' + n.label + "</a>" +
+            '<button class="m-toggle" type="button" aria-label="Show ' + n.label + ' options" aria-expanded="false">' + IC.caret + "</button>" +
+          "</div>" +
+          '<div class="m-sub"><div class="m-sub__list">' +
+            n.children.map(subAnchor).join("") +
+          "</div></div>" +
+        "</div>";
+      }
+      return '<div class="m-group"><div class="m-row"><a href="' + n.href + '">' + n.label + "</a></div></div>";
     }).join("");
 
     var header = document.createElement("header");
@@ -97,7 +152,7 @@
       '<button class="menu-btn on-hero" aria-label="Open menu" aria-expanded="false">' + IC.menu + "</button>" +
       "</div>" +
       '<div class="mobile-menu">' +
-      NAV.map(function (n) { return '<a href="' + n.href + '">' + n.label + "</a>"; }).join("") +
+      mobileLinks +
       '<a class="btn" href="' + CONTACT.waHref + '" target="_blank" rel="noopener">Enquire Now</a>' +
       "</div>";
     document.body.insertBefore(header, document.body.firstChild);
@@ -110,6 +165,17 @@
       menuBtn.innerHTML = open ? IC.close : IC.menu;
       document.body.style.overflow = open ? "hidden" : "";
     });
+
+    // expandable submenus (mobile)
+    header.querySelectorAll(".m-toggle").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var group = btn.parentNode.parentNode;
+        var sub = group.querySelector(".m-sub");
+        var open = sub.classList.toggle("open");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    });
+
     menu.querySelectorAll("a").forEach(function (a) {
       a.addEventListener("click", function () {
         menu.classList.remove("open");
