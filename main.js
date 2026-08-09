@@ -20,19 +20,8 @@
       "assets/img/1523761415282-2106778cfb5a.jpg",
   };
   var NAV = [
-    { label: "Home", href: "index.html", children: [
-      { label: "The Peruvian Way", href: "index.html#about" },
-      { label: "The Three Pillars", href: "index.html#experiences" },
-      { label: "Featured Journeys", href: "index.html#journeys" },
-      { label: "Why Travel With Us", href: "index.html#difference" },
-      { label: "Begin Your Journey", href: "index.html#enquire" },
-    ] },
-    { label: "The Story", href: "story.html", children: [
-      { label: "Meet Patricia", href: "story.html#patricia" },
-      { label: "Peru's Iconic Highlights", href: "story.html#highlights" },
-      { label: "The Amazon", href: "story.html#amazon" },
-      { label: "Culture & Celebration", href: "story.html#celebration" },
-    ] },
+    { label: "Home", href: "index.html" },
+    { label: "The Story", href: "story.html" },
     { label: "Experiences", href: "experiences.html", children: [
       { label: "Culture", href: "experiences.html#culture" },
       { label: "Gastronomy", href: "experiences.html#gastronomy" },
@@ -46,11 +35,7 @@
       { label: "Majestic Peru · 10 Days", href: "journey-majestic-peru.html" },
       { label: "Cusco Essentials · 3 Days", href: "journey-cusco-essentials.html" },
     ] },
-    { label: "Contact", href: "contact.html", children: [
-      { label: "Start an Enquiry", href: "contact.html" },
-      { label: "Chat on WhatsApp", href: CONTACT.waHref, external: true },
-      { label: "Email Patricia", href: "mailto:" + CONTACT.email + "?subject=Bespoke%20Peru%20Journey%20Enquiry", external: true },
-    ] },
+    { label: "Contact", href: "contact.html" },
   ];
 
   /* ---------- chakana svg ---------- */
