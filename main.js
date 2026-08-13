@@ -30,7 +30,7 @@
      3. In the Payment Link's settings, set the confirmation/redirect page
         to  payment-success.html  so clients land on the thank-you page. */
   var PAYMENTS = {
-    stripeLink: "", // e.g. "https://buy.stripe.com/xxxxxxxxxxxx"
+    stripeLink: "https://buy.stripe.com/test_9B6eVdaXcbZrc9J2gw5Ne00", // TEST link — replace with your live Payment Link when ready
   };
   var NAV = [
     { label: "Home", href: "index.html" },
