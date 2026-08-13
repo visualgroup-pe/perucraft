@@ -19,6 +19,19 @@
     portrait:
       "assets/img/1523761415282-2106778cfb5a.jpg",
   };
+
+  /* ---------- payments ----------
+     Card payments are handled by Stripe's own secure, hosted checkout.
+     No card details ever touch this website.
+     1. In your Stripe Dashboard, create a Payment Link
+        (Products → Payment Links). For bespoke amounts, set the price to
+        "Customer chooses what to pay".
+     2. Paste that link below (it looks like https://buy.stripe.com/...).
+     3. In the Payment Link's settings, set the confirmation/redirect page
+        to  payment-success.html  so clients land on the thank-you page. */
+  var PAYMENTS = {
+    stripeLink: "", // e.g. "https://buy.stripe.com/xxxxxxxxxxxx"
+  };
   var NAV = [
     { label: "Home", href: "index.html" },
     { label: "The Story", href: "story.html" },
@@ -195,7 +208,8 @@
           '<li><a href="experiences.html">Experiences</a></li>' +
           '<li><a href="journeys.html">Journeys</a></li>' +
           '<li><a href="story.html">Meet Patricia</a></li>' +
-          '<li><a href="contact.html">Contact</a></li></ul></div>' +
+          '<li><a href="contact.html">Contact</a></li>' +
+          '<li><a href="payments.html">Make a Payment</a></li></ul></div>' +
         '<div><h4>Connect</h4><ul>' +
           '<li><a href="' + CONTACT.waHref + '" target="_blank" rel="noopener">WhatsApp</a></li>' +
           '<li><a href="' + CONTACT.instagram + '" target="_blank" rel="noopener">Instagram</a></li>' +
@@ -450,9 +464,29 @@
     document.querySelectorAll(".js-wanum").forEach(function (el) { el.textContent = CONTACT.waNumber; });
   }
 
+  function fillPay() {
+    var link = (typeof PAYMENTS !== "undefined" && PAYMENTS.stripeLink) ? PAYMENTS.stripeLink : "";
+    document.querySelectorAll(".js-pay").forEach(function (a) {
+      if (link) {
+        a.setAttribute("href", link);
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener");
+        a.removeAttribute("aria-disabled");
+      } else {
+        a.setAttribute("href", "#");
+        a.setAttribute("aria-disabled", "true");
+        a.addEventListener("click", function (e) { e.preventDefault(); });
+      }
+    });
+    if (!link) {
+      document.querySelectorAll(".js-pay-setup").forEach(function (el) { el.hidden = false; });
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     fillArrows();
     fillEnquire();
+    fillPay();
     buildPreloader();
     buildHeader();
     buildFooter();
