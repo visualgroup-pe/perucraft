@@ -49,6 +49,7 @@
       { label: "Cusco Essentials · 3 Days", href: "journey-cusco-essentials.html" },
     ] },
     { label: "Contact", href: "contact.html" },
+    { label: "Payments", href: "payments.html" },
   ];
 
   /* ---------- chakana svg ---------- */
