@@ -17,7 +17,7 @@
     greeting:
       "Hello, I'm Patricia. I'd be delighted to help you plan your journey — do say hello whenever suits you.",
     portrait:
-      "assets/img/1523761415282-2106778cfb5a.jpg",
+      "assets/img/1523761415282-2106778cfb5a.jpeg",
   };
 
   /* ---------- payments ----------
