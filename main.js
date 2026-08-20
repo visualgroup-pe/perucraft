@@ -160,6 +160,7 @@
     var menu = header.querySelector(".mobile-menu");
     menuBtn.addEventListener("click", function () {
       var open = menu.classList.toggle("open");
+      header.classList.toggle("menu-open", open);
       menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
       menuBtn.innerHTML = open ? IC.close : IC.menu;
       document.body.style.overflow = open ? "hidden" : "";
@@ -178,6 +179,7 @@
     menu.querySelectorAll("a").forEach(function (a) {
       a.addEventListener("click", function () {
         menu.classList.remove("open");
+        header.classList.remove("menu-open");
         menuBtn.setAttribute("aria-expanded", "false");
         menuBtn.innerHTML = IC.menu;
         document.body.style.overflow = "";
