@@ -12,8 +12,10 @@
   var CONTACT = {
     waNumber: "+44 7341 565898",
     waHref: "https://wa.me/" + WA_DIGITS + "?text=" + WA_MSG,
-    email: "administracion@visualgroup.net",
-    instagram: "https://instagram.com",
+    // TODO(owner): confirmar el correo definitivo de la marca (placeholder por ahora; NO usar el correo de la agencia).
+    email: "hello@perucraftedexperiences.com",
+    // TODO(owner): pegar la URL real de Instagram. Con el valor vacío, el icono y el enlace se ocultan en el footer.
+    instagram: "",
     greeting:
       "Hello, I'm Patricia. I'd be delighted to help you plan your journey — do say hello whenever suits you.",
     portrait:
@@ -30,7 +32,9 @@
      3. In the Payment Link's settings, set the confirmation/redirect page
         to  payment-success.html  so clients land on the thank-you page. */
   var PAYMENTS = {
-    stripeLink: "https://buy.stripe.com/test_9B6eVdaXcbZrc9J2gw5Ne00", // TEST link — replace with your live Payment Link when ready
+    // TODO(owner): pegar aquí el Stripe Payment Link de PRODUCCIÓN (https://buy.stripe.com/...).
+    // Con el valor vacío, fillPay() desactiva el botón y muestra el aviso de configuración. NO usar enlaces test_.
+    stripeLink: "",
   };
   var NAV = [
     { label: "Home", href: "index.html" },
@@ -198,13 +202,14 @@
   function buildFooter() {
     var f = document.querySelector("footer.footer");
     if (!f) { f = document.createElement("footer"); f.className = "footer"; document.body.appendChild(f); }
+    var ig = CONTACT.instagram;
     f.innerHTML =
       '<div class="greca on-dark" style="opacity:.4"></div>' +
       '<div class="container footer__grid">' +
         '<div class="stack gap-6" style="align-items:flex-start">' +
           brandHTML("") +
           '<p style="max-width:20rem;color:rgba(241,236,225,.7);font-size:.95rem">Bespoke cultural and gastronomic journeys across Peru — designed personally, by hand, from the UK.</p>' +
-          '<a class="footer__social" href="' + CONTACT.instagram + '" target="_blank" rel="noopener" aria-label="Instagram">' + IC.insta + "</a>" +
+          (ig ? '<a class="footer__social" href="' + ig + '" target="_blank" rel="noopener" aria-label="Instagram">' + IC.insta + "</a>" : "") +
         "</div>" +
         '<div><h4>Explore</h4><ul>' +
           '<li><a href="story.html">The Story</a></li>' +
@@ -215,7 +220,7 @@
           '<li><a href="payments.html">Make a Payment</a></li></ul></div>' +
         '<div><h4>Connect</h4><ul>' +
           '<li><a href="' + CONTACT.waHref + '" target="_blank" rel="noopener">WhatsApp</a></li>' +
-          '<li><a href="' + CONTACT.instagram + '" target="_blank" rel="noopener">Instagram</a></li>' +
+          (ig ? '<li><a href="' + ig + '" target="_blank" rel="noopener">Instagram</a></li>' : "") +
           '<li><a href="contact.html">Newsletter</a></li></ul></div>' +
         '<div><h4>Newsletter</h4>' +
           '<p style="color:rgba(241,236,225,.7);font-size:.9rem;margin-top:1rem">Occasional letters from Peru — stories, tables and quiet corners worth the journey.</p>' +
@@ -522,6 +527,7 @@
     document.querySelectorAll(".js-email").forEach(function (a) {
       a.setAttribute("href", "mailto:" + CONTACT.email + "?subject=Bespoke%20Peru%20Journey%20Enquiry");
     });
+    document.querySelectorAll(".js-emailtext").forEach(function (el) { el.textContent = CONTACT.email; });
     document.querySelectorAll(".js-wa").forEach(function (a) {
       a.setAttribute("href", CONTACT.waHref);
       a.setAttribute("target", "_blank");

@@ -46,7 +46,7 @@
         <div class="stack gap-4" style="margin-top:.5rem">
           <a class="btn btn--wa js-wa" href="#" style="align-self:flex-start;padding-inline:1.6rem">Chat on WhatsApp</a>
           <p class="muted">WhatsApp · <span class="js-wanum"></span></p>
-          <p class="muted">Email · <a class="tlink js-email" style="text-transform:none;letter-spacing:0;font-weight:400" href="#"><span class="u">administracion@visualgroup.net</span></a></p>
+          <p class="muted">Email · <a class="tlink js-email" style="text-transform:none;letter-spacing:0;font-weight:400" href="#"><span class="u js-emailtext">hello@perucraftedexperiences.com</span></a></p>
         </div>
         <div class="figure-frame" style="margin-top:1rem;max-width:22rem"><img src="assets/img/1523761415282-2106778cfb5a.jpeg" alt="Patricia" loading="lazy"></div>
       </div>
@@ -72,8 +72,12 @@
             </select>
           </div>
           <div class="field"><label for="f-msg">Tell me about your dream journey</label><textarea id="f-msg" name="message" rows="4" placeholder="Interests, must-sees, food you love, pace…"></textarea></div>
+          <label for="f-consent" style="display:flex;align-items:flex-start;gap:.55rem;text-transform:none;letter-spacing:0;font-size:.8rem;color:var(--charcoal-soft);line-height:1.5;cursor:pointer">
+            <input type="checkbox" id="f-consent" name="consent" required style="width:auto;margin-top:.2rem;flex:none;accent-color:var(--forest)">
+            <span>I have read the <a href="privacy.html" style="color:var(--terracotta);text-decoration:underline">privacy policy</a> and agree that Patricia may contact me about my journey.</span>
+          </label>
           <button class="btn btn--gold" type="submit" style="width:100%">Send via WhatsApp ${arrow}</button>
-          <p class="muted" style="font-size:.78rem;text-align:center">Prefer email? Write to <a class="js-email" href="#" style="color:var(--terracotta)">administracion@visualgroup.net</a></p>
+          <p class="muted" style="font-size:.78rem;text-align:center">Prefer email? Write to <a class="js-email js-emailtext" href="#" style="color:var(--terracotta)">hello@perucraftedexperiences.com</a></p>
         </form>
       </div>
     </div>

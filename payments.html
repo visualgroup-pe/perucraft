@@ -54,8 +54,10 @@
 
         <a class="btn btn--gold btn--lg js-pay" href="#" style="width:100%;margin-top:1.5rem">Pay securely with card ${arrow}</a>
 
+        <!-- TODO(owner): este aviso solo aparece cuando PAYMENTS.stripeLink está vacío en main.js.
+             Pega el Stripe Payment Link de PRODUCCIÓN para activar el botón de pago. NO usar enlaces test_. -->
         <p class="js-pay-setup" hidden style="margin-top:1rem;font-size:.82rem;color:var(--terracotta-deep);background:var(--ivory-50);border:1px solid var(--stone-line);border-radius:6px;padding:.75rem .9rem">
-          <strong>Setup note (visible to the site owner only):</strong> add your Stripe Payment Link to the <code>PAYMENTS</code> object in <code>main.js</code> to activate this button.
+          Card payment is currently being set up — please <a class="js-wa" href="#" target="_blank" rel="noopener" style="color:var(--terracotta-deep);font-weight:600;text-decoration:underline">message me on WhatsApp</a> and we'll arrange it right away.
         </p>
 
         <div style="display:flex;align-items:center;gap:.5rem;margin-top:1.5rem;color:var(--stone)">
