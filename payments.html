@@ -12,6 +12,18 @@
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+<noscript>
+<div style="background:var(--forest);color:var(--ivory-50);padding:.7rem 1rem;text-align:center;font-size:.9rem;line-height:1.9">
+<strong style="font-family:var(--font-serif);color:var(--ivory-50)">Perú Crafted Experiences</strong>&nbsp;&middot;&nbsp;
+<a href="index.html" style="color:var(--gold-soft)">Home</a>&nbsp;
+<a href="story.html" style="color:var(--gold-soft)">The Story</a>&nbsp;
+<a href="experiences.html" style="color:var(--gold-soft)">Experiences</a>&nbsp;
+<a href="journeys.html" style="color:var(--gold-soft)">Journeys</a>&nbsp;
+<a href="contact.html" style="color:var(--gold-soft)">Contact</a>&nbsp;&middot;&nbsp;
+<a href="https://wa.me/447341565898" style="color:var(--gold-soft)">WhatsApp</a>&nbsp;
+<a href="mailto:hello@perucraftedexperiences.com" style="color:var(--gold-soft)">Email</a>
+</div>
+</noscript>
 <a class="skip-link" href="#main">Skip to content</a>
 <main id="main">
 
@@ -52,7 +64,7 @@
         <h3 style="font-size:1.9rem;margin-top:1rem">Secure checkout</h3>
         <p class="muted" style="margin-top:.75rem">Select the button below and you'll be taken to our encrypted Stripe page to enter your card details safely. It only takes a moment.</p>
 
-        <a class="btn btn--gold btn--lg js-pay" href="#" style="width:100%;margin-top:1.5rem">Pay securely with card ${arrow}</a>
+        <a class="btn btn--gold btn--lg js-pay" href="#" style="width:100%;margin-top:1.5rem">Pay securely with card <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 
         <!-- TODO(owner): este aviso solo aparece cuando PAYMENTS.stripeLink está vacío en main.js.
              Pega el Stripe Payment Link de PRODUCCIÓN para activar el botón de pago. NO usar enlaces test_. -->
@@ -97,6 +109,6 @@
 
 </main>
 <footer class="footer"></footer>
-<script src="main.js"></script>
+<script src="main.js" defer></script>
 </body>
 </html>

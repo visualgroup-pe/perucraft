@@ -36,6 +36,11 @@
     // Con el valor vacío, fillPay() desactiva el botón y muestra el aviso de configuración. NO usar enlaces test_.
     stripeLink: "",
   };
+
+  // TODO(owner): endpoint para recibir los leads del formulario por email
+  // (Formspree / Netlify Forms / Basin). Con el valor vacío se usa WhatsApp como fallback.
+  var FORM_ENDPOINT = "";
+
   var NAV = [
     { label: "Home", href: "index.html" },
     { label: "The Story", href: "story.html" },
@@ -98,6 +103,9 @@
   /* ---------- current page ---------- */
   var path = location.pathname.split("/").pop() || "index.html";
   if (path === "") path = "index.html";
+
+  /* ---------- reduced motion ---------- */
+  var REDUCE = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
   /* ---------- brand lockup ---------- */
   function brandHTML(cls) {
@@ -308,7 +316,7 @@
   /* ---------- reveal on scroll ---------- */
   function initReveals() {
     var els = document.querySelectorAll(".reveal");
-    if (!("IntersectionObserver" in window)) {
+    if (REDUCE || !("IntersectionObserver" in window)) {
       els.forEach(function (e) { e.classList.add("in"); });
       return;
     }
@@ -322,6 +330,7 @@
 
   /* ---------- parallax ---------- */
   function initParallax() {
+    if (REDUCE) return;
     var items = [].slice.call(document.querySelectorAll("[data-parallax]"));
     if (!items.length) return;
     var ticking = false;
@@ -442,9 +451,8 @@
   function initEnquiryForm() {
     var form = document.querySelector(".js-enquiry-form");
     if (!form) return;
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var d = new FormData(form);
+
+    function waUrl(d) {
       var lines = [
         "Hello Patricia, I'd love to plan a bespoke Peru journey.",
         "",
@@ -456,8 +464,49 @@
         "",
         (d.get("message") || ""),
       ];
-      var url = "https://wa.me/" + WA_DIGITS + "?text=" + encodeURIComponent(lines.join("\n"));
-      window.open(url, "_blank", "noopener");
+      return "https://wa.me/" + WA_DIGITS + "?text=" + encodeURIComponent(lines.join("\n"));
+    }
+    function feedback(html) {
+      var box = form.querySelector(".js-form-msg");
+      if (!box) {
+        box = document.createElement("div");
+        box.className = "js-form-msg";
+        box.style.marginTop = "1rem";
+        form.appendChild(box);
+      }
+      box.innerHTML = html;
+    }
+    var LINK = 'style="color:var(--terracotta);text-decoration:underline"';
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var d = new FormData(form); // includes the required consent checkbox
+      var wa = waUrl(d);
+
+      // No endpoint configured yet → keep the WhatsApp behaviour as a fallback.
+      if (!FORM_ENDPOINT) {
+        window.open(wa, "_blank", "noopener");
+        feedback('<p style="font-size:.85rem;color:var(--charcoal-soft)">Opening WhatsApp… if nothing happens, <a ' + LINK + ' href="' + wa + '" target="_blank" rel="noopener">tap here to send your enquiry</a>.</p>');
+        return;
+      }
+
+      var btn = form.querySelector('button[type="submit"]');
+      var label = btn ? btn.innerHTML : "";
+      if (btn) { btn.disabled = true; btn.innerHTML = "Sending…"; }
+
+      fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Accept": "application/json" },
+        body: d,
+      }).then(function (r) {
+        if (!r.ok) throw new Error("bad status");
+        form.reset();
+        if (btn) { btn.disabled = false; btn.innerHTML = label; }
+        feedback('<p style="font-size:.9rem;color:var(--forest);font-weight:500">Thank you — your enquiry is on its way. I&rsquo;ll be in touch personally.</p><p style="font-size:.82rem;color:var(--charcoal-soft);margin-top:.4rem">Prefer to chat now? <a ' + LINK + ' href="' + wa + '" target="_blank" rel="noopener">Message me on WhatsApp</a>.</p>');
+      }).catch(function () {
+        if (btn) { btn.disabled = false; btn.innerHTML = label; }
+        feedback('<p style="font-size:.85rem;color:var(--terracotta-deep)">Something went wrong sending your enquiry. Please <a ' + LINK + ' href="' + wa + '" target="_blank" rel="noopener">message me on WhatsApp</a> or email <a ' + LINK + ' href="mailto:' + CONTACT.email + '">' + CONTACT.email + '</a>.</p>');
+      });
     });
   }
 
@@ -511,13 +560,6 @@
   }
 
   /* ---------- init ---------- */
-  function fillArrows() {
-    var m = document.getElementById("main");
-    if (m && m.innerHTML.indexOf("${arrow}") !== -1) {
-      m.innerHTML = m.innerHTML.replace(/\$\{arrow\}/g, IC.arrow);
-    }
-  }
-
   function fillEnquire() {
     document.querySelectorAll(".js-enquire").forEach(function (a) {
       a.setAttribute("href", CONTACT.waHref);
@@ -556,7 +598,6 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    fillArrows();
     fillEnquire();
     fillPay();
     buildPreloader();

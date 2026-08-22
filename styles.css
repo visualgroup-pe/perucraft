@@ -917,8 +917,18 @@ button { font: inherit; cursor: pointer; }
 .skip-link:focus { left: 1rem; top: 1rem; z-index: 300; background: var(--forest); color: var(--ivory-50); padding: 0.5rem 1rem; border-radius: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
-  .reveal { opacity: 1; transform: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  /* parallax (JS-driven), marquee, chakana spin/float, greca drift and Ken Burns */
+  [data-parallax] { transform: none !important; }
+  .marquee__track { animation: none !important; }
+  .spin-slow, .wm--float, .greca--anim, .pulse-ring::before { animation: none !important; }
+  .hero__media img, .pagehero__media img { animation: none !important; }
 }
 
 /* ================= Regions / Stats / Pricing (added) ================= */
