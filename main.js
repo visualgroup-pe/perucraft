@@ -170,12 +170,24 @@
 
     var menuBtn = header.querySelector(".menu-btn");
     var menu = header.querySelector(".mobile-menu");
+    function closeMenu() {
+      menu.classList.remove("open");
+      header.classList.remove("menu-open");
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute("aria-label", "Open menu");
+      menuBtn.innerHTML = IC.menu;
+      document.body.style.overflow = "";
+    }
+    function openMenu() {
+      menu.classList.add("open");
+      header.classList.add("menu-open");
+      menuBtn.setAttribute("aria-expanded", "true");
+      menuBtn.setAttribute("aria-label", "Close menu");
+      menuBtn.innerHTML = IC.close;
+      document.body.style.overflow = "hidden";
+    }
     menuBtn.addEventListener("click", function () {
-      var open = menu.classList.toggle("open");
-      header.classList.toggle("menu-open", open);
-      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
-      menuBtn.innerHTML = open ? IC.close : IC.menu;
-      document.body.style.overflow = open ? "hidden" : "";
+      if (menu.classList.contains("open")) closeMenu(); else openMenu();
     });
 
     // expandable submenus (mobile)
@@ -189,13 +201,15 @@
     });
 
     menu.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", function () {
-        menu.classList.remove("open");
-        header.classList.remove("menu-open");
-        menuBtn.setAttribute("aria-expanded", "false");
-        menuBtn.innerHTML = IC.menu;
-        document.body.style.overflow = "";
-      });
+      a.addEventListener("click", closeMenu);
+    });
+
+    // close the full-screen menu when crossing into desktop, or on Escape
+    var mq = window.matchMedia("(min-width: 1024px)");
+    var onMQ = function (e) { if (e.matches) closeMenu(); };
+    if (mq.addEventListener) mq.addEventListener("change", onMQ); else mq.addListener(onMQ);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
     });
 
     function onScroll() {
@@ -429,7 +443,7 @@
     if (!wrap) return;
     var quotes = [].slice.call(wrap.querySelectorAll(".quote"));
     var dotsWrap = wrap.querySelector(".dots");
-    if (!quotes.length) return;
+    if (!dotsWrap || !quotes.length) return;
     var i = 0, timer;
     dotsWrap.innerHTML = quotes.map(function (_, k) {
       return '<button aria-label="Testimonial ' + (k + 1) + '"></button>';
@@ -522,16 +536,17 @@
       "<path class='stroke' d='" + CHAK_OUTLINE + "'/>" +
       "<circle class='hole' cx='60' cy='60' r='12.5'/></svg>";
     document.body.appendChild(pre);
-    if (seen) {
+    function hide() {
       pre.classList.add("done");
-      setTimeout(function () { pre.remove(); }, 60);
-    } else {
-      sessionStorage.setItem("pce_seen", "1");
-      window.addEventListener("load", function () {
-        setTimeout(function () { pre.classList.add("done"); }, 1700);
-        setTimeout(function () { pre.remove(); }, 2500);
-      });
+      setTimeout(function () { if (pre.parentNode) pre.remove(); }, 800);
     }
+    // Repeat visits (same session) and reduced-motion: no intro, remove at once.
+    if (seen || REDUCE) { pre.remove(); return; }
+    sessionStorage.setItem("pce_seen", "1");
+    var fired = false;
+    var run = function () { if (!fired) { fired = true; setTimeout(hide, 1200); } };
+    window.addEventListener("load", run);
+    setTimeout(run, 3500); // safety net: reveal the site no matter what
   }
 
   /* ---------- page transitions ---------- */
@@ -545,6 +560,11 @@
     var main = document.querySelector("main");
     if (main) main.classList.add("page-enter");
 
+    function reset() { overlay.classList.remove("active"); }
+    // Back button restores the page from bfcache with the DOM intact — clear any stuck overlay.
+    window.addEventListener("pageshow", function (e) { if (e.persisted) reset(); });
+    window.addEventListener("popstate", reset);
+
     document.addEventListener("click", function (e) {
       var a = e.target.closest ? e.target.closest("a") : null;
       if (!a) return;
@@ -555,7 +575,10 @@
       if (!/\.html(\?|#|$)/.test(href)) return; // only internal .html pages
       e.preventDefault();
       overlay.classList.add("active");
-      setTimeout(function () { location.href = href; }, 620);
+      var done = false;
+      var go = function () { if (!done) { done = true; location.href = href; } };
+      setTimeout(go, 620);
+      setTimeout(reset, 4000); // safety: never leave the screen blocked
     });
   }
 
