@@ -205,6 +205,8 @@ button { font: inherit; cursor: pointer; }
   transition: color 0.3s;
 }
 .tlink.on-dark { color: rgba(250,249,247,0.9); }
+/* card CTAs are primary touch targets — guarantee 44px height */
+.jcard__foot .tlink, .card__body .tlink { min-height: 44px; }
 .tlink .u {
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 0% 1px;
@@ -809,6 +811,7 @@ button { font: inherit; cursor: pointer; }
   cursor: pointer; opacity: 0.85; box-shadow: 0 2px 8px -2px rgba(0,0,0,0.5);
 }
 .concierge__dismiss:hover { opacity: 1; }
+.concierge__dismiss::after { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; }
 /* fade the whole widget while the footer is on screen (unless the card is open) */
 .concierge { transition: opacity 0.3s var(--ease); }
 .concierge.at-footer:not(.open) { opacity: 0; pointer-events: none; }
