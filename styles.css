@@ -651,6 +651,10 @@ button { font: inherit; cursor: pointer; }
 @media (min-width: 1024px) { .split { grid-template-columns: 1fr 1fr; } }
 .figure-frame { position: relative; }
 .figure-frame img { width: 100%; border-radius: 2px; }
+/* cap tall portrait sources so they don't render excessively vertical in editorial columns */
+.figure-frame img[src*="1568805778719"],
+.figure-frame img[src*="1523761415282"],
+.figure-frame img[src*="patricia-story"] { aspect-ratio: 4 / 5; object-fit: cover; }
 .figure-frame::before {
   content: ""; position: absolute; left: -1rem; top: -1rem;
   width: 6rem; height: 6rem; border-left: 1px solid rgba(212,160,55,0.5);
