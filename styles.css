@@ -76,7 +76,7 @@ h1, h2, h3, h4, h5 {
 }
 
 p { text-wrap: pretty; }
-img { max-width: 100%; display: block; }
+img { max-width: 100%; height: auto; display: block; }
 /* <picture> is transparent to layout so existing "container img" rules keep working */
 picture { display: contents; }
 a { color: inherit; text-decoration: none; }
@@ -790,15 +790,29 @@ button { font: inherit; cursor: pointer; }
 .concierge__trigger .t .n { font-family: var(--font-serif); font-size: 1rem; }
 .concierge__trigger .t .o { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-soft); margin-top: 0.2rem; }
 .concierge__trigger .t .o::before { content: ""; width: 0.4rem; height: 0.4rem; border-radius: 999px; background: var(--whatsapp); }
-.pulse-ring::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--whatsapp); z-index: -1; animation: pulse 2.8s var(--ease) infinite; }
+.pulse-ring::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--whatsapp); z-index: -1; animation: pulse 2.8s var(--ease) 3; }
 @keyframes pulse { 0% { transform: scale(0.92); opacity: 0.5; } 70% { transform: scale(1.7); opacity: 0; } 100% { opacity: 0; } }
 .concierge__wa { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; margin-top: 1rem; height: 3rem; border-radius: 999px; background: var(--whatsapp); color: #fff; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; transition: transform 0.3s; }
 .concierge__wa:hover { transform: scale(1.02); }
 .concierge__teaser { display: none; background: var(--ivory-50); border: 1px solid var(--stone-line); border-radius: 999px; padding: 0.5rem 1rem; font-family: var(--font-serif); font-style: italic; font-size: 0.9rem; color: var(--charcoal); box-shadow: 0 12px 30px -12px rgba(51,51,51,0.4); }
 @media (min-width: 640px) { .concierge__teaser.show { display: block; } }
+.concierge__triggerwrap { position: relative; display: flex; align-items: center; gap: 0.5rem; }
+.concierge__dismiss {
+  position: absolute; top: -6px; right: -6px; z-index: 1;
+  width: 1.4rem; height: 1.4rem; border-radius: 999px; border: none;
+  background: var(--charcoal); color: var(--ivory-50);
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; opacity: 0.85; box-shadow: 0 2px 8px -2px rgba(0,0,0,0.5);
+}
+.concierge__dismiss:hover { opacity: 1; }
+/* fade the whole widget while the footer is on screen (unless the card is open) */
+.concierge { transition: opacity 0.3s var(--ease); }
+.concierge.at-footer:not(.open) { opacity: 0; pointer-events: none; }
 
 /* ---------- reveal on scroll ---------- */
-.reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease), transform 1s var(--ease); will-change: opacity, transform; }
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal:not(.in) { will-change: opacity, transform; }
+.reveal.in { will-change: auto; }
 .reveal--up { transform: translateY(54px); }
 .reveal--left { transform: translateX(-46px); }
 .reveal--right { transform: translateX(46px); }

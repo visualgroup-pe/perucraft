@@ -347,6 +347,7 @@
 
   /* ---------- concierge ---------- */
   function buildConcierge() {
+    if (sessionStorage.getItem("pce_concierge_off")) return; // dismissed this session
     var c = document.createElement("div");
     c.className = "concierge";
     c.innerHTML =
@@ -362,12 +363,13 @@
           '<p class="concierge__num">' + CONTACT.waNumber + "</p>" +
         "</div>" +
       "</div>" +
-      '<div style="display:flex;align-items:center;gap:.5rem">' +
+      '<div class="concierge__triggerwrap">' +
         '<button class="concierge__teaser" type="button">Hello — need a hand?</button>' +
         '<button class="concierge__trigger pulse-ring" aria-label="Message Patricia" aria-expanded="false">' +
           '<span class="concierge__avatar"><img src="' + CONTACT.portrait + '" alt="" width="44" height="44"></span>' +
           '<span class="t"><span class="n">Patricia</span><span class="o">Online</span></span>' +
         "</button>" +
+        '<button class="concierge__dismiss" type="button" aria-label="Hide chat"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
       "</div>";
     document.body.appendChild(c);
 
@@ -385,6 +387,20 @@
     teaser.addEventListener("click", function () { setOpen(true); });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
     setTimeout(function () { if (!c.classList.contains("open")) teaser.classList.add("show"); }, 2600);
+
+    var dismiss = c.querySelector(".concierge__dismiss");
+    dismiss.addEventListener("click", function () {
+      if (c.parentNode) c.parentNode.removeChild(c);
+      try { sessionStorage.setItem("pce_concierge_off", "1"); } catch (e) {}
+    });
+
+    // fade the widget away once the footer is on screen (stops it covering the CTA / legal)
+    var footer = document.querySelector("footer.footer");
+    if (footer && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (en) { c.classList.toggle("at-footer", en.isIntersecting); });
+      }, { threshold: 0.05 }).observe(footer);
+    }
   }
 
   /* ---------- scroll progress ---------- */
@@ -436,30 +452,50 @@
     if (REDUCE) return;
     var items = [].slice.call(document.querySelectorAll("[data-parallax]"));
     if (!items.length) return;
+    var metrics = [];
+    // measure once (and on resize) with the parallax transform cleared, so we
+    // cache each element's natural document-centre — no getBoundingClientRect per frame.
+    function measure() {
+      var sy = window.pageYOffset;
+      metrics = items.map(function (el) {
+        var prev = el.style.transform;
+        el.style.transform = "none";
+        var r = el.getBoundingClientRect();
+        el.style.transform = prev;
+        return { el: el, mid: r.top + sy + r.height / 2, speed: parseFloat(el.getAttribute("data-parallax")) || 0.15 };
+      });
+    }
     var ticking = false;
     function update() {
-      var vh = window.innerHeight;
-      items.forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        var speed = parseFloat(el.getAttribute("data-parallax")) || 0.15;
-        var offset = (r.top + r.height / 2 - vh / 2) * -speed;
-        el.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0)";
+      var vh = window.innerHeight, sy = window.pageYOffset;
+      metrics.forEach(function (m) {
+        var offset = (m.mid - sy - vh / 2) * -m.speed;
+        m.el.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0)";
       });
       ticking = false;
     }
+    measure();
     window.addEventListener("scroll", function () {
       if (!ticking) { requestAnimationFrame(update); ticking = true; }
     }, { passive: true });
-    window.addEventListener("resize", update);
+    window.addEventListener("resize", function () { measure(); update(); });
     update();
   }
 
   /* ---------- marquee (duplicate track) ---------- */
   function initMarquee() {
     document.querySelectorAll(".marquee__track").forEach(function (track) {
-      if (track.dataset.dup) return;
-      track.innerHTML += track.innerHTML;
-      track.dataset.dup = "1";
+      if (!track.dataset.dup) {
+        track.innerHTML += track.innerHTML;
+        track.dataset.dup = "1";
+      }
+      // pause the endless animation whenever the marquee is off-screen
+      var mq = track.closest ? track.closest(".marquee") : null;
+      if (mq && "IntersectionObserver" in window) {
+        new IntersectionObserver(function (es) {
+          es.forEach(function (en) { track.style.animationPlayState = en.isIntersecting ? "running" : "paused"; });
+        }, { threshold: 0 }).observe(mq);
+      }
     });
   }
 
@@ -483,12 +519,17 @@
       }
       var dots = dotsWrap ? [].slice.call(dotsWrap.querySelectorAll("button")) : [];
 
+      // eager-load the first two slides and preload the next as we advance (no grey gaps)
+      function eager(el) { var im = el && el.querySelector("img[loading='lazy']"); if (im) im.removeAttribute("loading"); }
+      eager(slides[0]); eager(slides[1]);
+      function preload(n) { eager(slides[(n + slides.length) % slides.length]); }
+
       function render() {
         track.style.transform = "translateX(" + (-i * 100) + "%)";
         dots.forEach(function (d, k) { d.classList.toggle("active", k === i); });
         if (countEl) countEl.textContent = (i + 1) + " / " + slides.length;
       }
-      function go(n) { i = (n + slides.length) % slides.length; render(); }
+      function go(n) { i = (n + slides.length) % slides.length; preload(i + 1); render(); }
       function restart() { if (!delay) return; clearInterval(timer); timer = setInterval(function () { go(i + 1); }, delay); }
       function stop() { clearInterval(timer); }
 
@@ -498,19 +539,21 @@
       if (next) next.addEventListener("click", function () { go(i + 1); restart(); });
       dots.forEach(function (d, k) { d.addEventListener("click", function () { go(k); restart(); }); });
 
-      // touch swipe
-      var x0 = null;
-      car.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; stop(); }, { passive: true });
+      // touch swipe (horizontal only — a vertical scroll must not change slide)
+      var x0 = null, y0 = null;
+      car.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; stop(); }, { passive: true });
       car.addEventListener("touchend", function (e) {
         if (x0 === null) return;
-        var dx = e.changedTouches[0].clientX - x0;
-        if (Math.abs(dx) > 40) go(dx < 0 ? i + 1 : i - 1);
-        x0 = null; restart();
+        var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? i + 1 : i - 1);
+        x0 = null; y0 = null; restart();
       });
 
-      // pause on hover
-      car.addEventListener("mouseenter", stop);
-      car.addEventListener("mouseleave", restart);
+      // pause on hover — only where hover truly exists (iOS may never fire mouseleave)
+      if (window.matchMedia && window.matchMedia("(hover: hover)").matches) {
+        car.addEventListener("mouseenter", stop);
+        car.addEventListener("mouseleave", restart);
+      }
 
       // pause when off-screen
       if (delay && "IntersectionObserver" in window) {
