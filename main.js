@@ -41,6 +41,10 @@
   // (Formspree / Netlify Forms / Basin). Con el valor vacío se usa WhatsApp como fallback.
   var FORM_ENDPOINT = "";
 
+  // TODO(owner): endpoint del newsletter (Mailchimp / Buttondown / Formspree).
+  // Con el valor vacío, el bloque del newsletter NO se muestra (nada de altas falsas).
+  var NEWSLETTER_ENDPOINT = "";
+
   var NAV = [
     { label: "Home", href: "index.html" },
     { label: "The Story", href: "story.html" },
@@ -160,6 +164,7 @@
       brandHTML("on-hero") +
       '<nav class="nav on-hero" aria-label="Primary">' + navLinks + "</nav>" +
       '<div class="header-cta"><a class="btn btn--sm btn--ivory js-enquire" href="' + CONTACT.waHref + '" target="_blank" rel="noopener">Enquire Now</a></div>' +
+      '<a class="header-wa on-hero js-wa" href="' + CONTACT.waHref + '" target="_blank" rel="noopener" aria-label="Enquire on WhatsApp">' + IC.wa + "</a>" +
       '<button class="menu-btn on-hero" aria-label="Open menu" aria-expanded="false">' + IC.menu + "</button>" +
       "</div>" +
       '<div class="mobile-menu">' +
@@ -170,24 +175,47 @@
 
     var menuBtn = header.querySelector(".menu-btn");
     var menu = header.querySelector(".mobile-menu");
-    function closeMenu() {
-      menu.classList.remove("open");
-      header.classList.remove("menu-open");
-      menuBtn.setAttribute("aria-expanded", "false");
-      menuBtn.setAttribute("aria-label", "Open menu");
-      menuBtn.innerHTML = IC.menu;
-      document.body.style.overflow = "";
-    }
+    var savedScroll = 0;
     function openMenu() {
+      savedScroll = window.scrollY || window.pageYOffset || 0;
       menu.classList.add("open");
       header.classList.add("menu-open");
       menuBtn.setAttribute("aria-expanded", "true");
       menuBtn.setAttribute("aria-label", "Close menu");
       menuBtn.innerHTML = IC.close;
-      document.body.style.overflow = "hidden";
+      // reliable scroll lock (iOS Safari): fix the body and remember the position
+      document.body.style.position = "fixed";
+      document.body.style.top = -savedScroll + "px";
+      document.body.style.width = "100%";
+      var first = menu.querySelector("a, button");
+      if (first) first.focus();
+    }
+    function closeMenu() {
+      var wasOpen = menu.classList.contains("open");
+      menu.classList.remove("open");
+      header.classList.remove("menu-open");
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute("aria-label", "Open menu");
+      menuBtn.innerHTML = IC.menu;
+      if (wasOpen) {
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.width = "";
+        window.scrollTo(0, savedScroll);
+        if (menuBtn.offsetParent !== null) menuBtn.focus();
+      }
     }
     menuBtn.addEventListener("click", function () {
       if (menu.classList.contains("open")) closeMenu(); else openMenu();
+    });
+    // focus trap: keep Tab within the open menu
+    menu.addEventListener("keydown", function (e) {
+      if (e.key !== "Tab") return;
+      var f = menu.querySelectorAll("a, button");
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
 
     // expandable submenus (mobile)
@@ -212,6 +240,42 @@
       if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
     });
 
+    // desktop dropdowns: keep aria-expanded in sync with hover/focus
+    header.querySelectorAll(".nav__item.has-sub").forEach(function (item) {
+      var link = item.querySelector("a");
+      link.setAttribute("aria-expanded", "false");
+      function setExp(v) { if (!item.classList.contains("sub-open")) link.setAttribute("aria-expanded", v ? "true" : "false"); }
+      item.addEventListener("mouseenter", function () { setExp(true); });
+      item.addEventListener("mouseleave", function () { setExp(false); });
+      item.addEventListener("focusin", function () { setExp(true); });
+      item.addEventListener("focusout", function () { setExp(false); });
+    });
+
+    // touch devices without hover (e.g. iPad Pro landscape): first tap opens the
+    // submenu, second tap follows the link; tap outside closes it.
+    if (window.matchMedia && window.matchMedia("(hover: none)").matches) {
+      header.querySelectorAll(".nav__item.has-sub").forEach(function (item) {
+        var link = item.querySelector("a");
+        link.addEventListener("click", function (e) {
+          if (!item.classList.contains("sub-open")) {
+            e.preventDefault();
+            header.querySelectorAll(".nav__item.sub-open").forEach(function (o) {
+              if (o !== item) { o.classList.remove("sub-open"); o.querySelector("a").setAttribute("aria-expanded", "false"); }
+            });
+            item.classList.add("sub-open");
+            link.setAttribute("aria-expanded", "true");
+          }
+        });
+      });
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest || !e.target.closest(".nav__item")) {
+          header.querySelectorAll(".nav__item.sub-open").forEach(function (o) {
+            o.classList.remove("sub-open"); o.querySelector("a").setAttribute("aria-expanded", "false");
+          });
+        }
+      });
+    }
+
     function onScroll() {
       if (window.scrollY > 40) header.classList.add("scrolled");
       else header.classList.remove("scrolled");
@@ -225,9 +289,10 @@
     var f = document.querySelector("footer.footer");
     if (!f) { f = document.createElement("footer"); f.className = "footer"; document.body.appendChild(f); }
     var ig = CONTACT.instagram;
+    var hasNews = !!NEWSLETTER_ENDPOINT;
     f.innerHTML =
       '<div class="greca on-dark" style="opacity:.4"></div>' +
-      '<div class="container footer__grid">' +
+      '<div class="container footer__grid' + (hasNews ? '' : ' footer__grid--no-news') + '">' +
         '<div class="stack gap-6" style="align-items:flex-start">' +
           brandHTML("") +
           '<p style="max-width:20rem;color:rgba(241,236,225,.7);font-size:.95rem">Bespoke cultural and gastronomic journeys across Peru — designed personally, by hand, from the UK.</p>' +
@@ -243,22 +308,41 @@
         '<div><h4>Connect</h4><ul>' +
           '<li><a href="' + CONTACT.waHref + '" target="_blank" rel="noopener">WhatsApp</a></li>' +
           (ig ? '<li><a href="' + ig + '" target="_blank" rel="noopener">Instagram</a></li>' : "") +
-          '<li><a href="contact.html">Newsletter</a></li></ul></div>' +
-        '<div><h4>Newsletter</h4>' +
-          '<p style="color:rgba(241,236,225,.7);font-size:.9rem;margin-top:1rem">Occasional letters from Peru — stories, tables and quiet corners worth the journey.</p>' +
-          '<form class="footer__news js-news" style="margin-top:1rem"><input type="email" required placeholder="Your email" aria-label="Email"><button type="submit">Join</button></form>' +
-        "</div>" +
+          (hasNews ? '<li><a href="contact.html">Newsletter</a></li>' : "") +
+          "</ul></div>" +
+        (hasNews ?
+          '<div><h4>Newsletter</h4>' +
+            '<p style="color:rgba(241,236,225,.7);font-size:.9rem;margin-top:1rem">Occasional letters from Peru — stories, tables and quiet corners worth the journey.</p>' +
+            '<form class="footer__news js-news" style="margin-top:1rem"><input type="email" name="email" required placeholder="Your email" aria-label="Email"><button type="submit">Join</button></form>' +
+            '<p style="font-size:.72rem;color:rgba(241,236,225,.5);margin-top:.5rem">We only use your email for the newsletter — see our <a href="privacy.html" style="color:var(--gold-soft);text-decoration:underline">privacy policy</a>.</p>' +
+          "</div>"
+        : "") +
       "</div>" +
       '<div class="container"><div class="footer__bottom">' +
         "<p>© " + new Date().getFullYear() + " Perú Crafted Experiences. All rights reserved.</p>" +
         '<ul class="footer__legal"><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul>' +
       "</div></div>";
 
-    var news = f.querySelector(".js-news");
-    news.addEventListener("submit", function (e) {
-      e.preventDefault();
-      news.innerHTML = '<p style="color:var(--ivory-50);font-size:.9rem;padding:.6rem 0">Thank you — you’re on the list.</p>';
-    });
+    var newsForm = f.querySelector(".js-news");
+    if (newsForm) {
+      newsForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var btn = newsForm.querySelector("button");
+        var lbl = btn ? btn.textContent : "";
+        if (btn) { btn.disabled = true; btn.textContent = "…"; }
+        fetch(NEWSLETTER_ENDPOINT, { method: "POST", headers: { "Accept": "application/json" }, body: new FormData(newsForm) })
+          .then(function (r) {
+            if (!r.ok) throw 0;
+            newsForm.innerHTML = '<p style="color:var(--ivory-50);font-size:.9rem;padding:.6rem 0">Thank you — you’re on the list.</p>';
+          })
+          .catch(function () {
+            if (btn) { btn.disabled = false; btn.textContent = lbl; }
+            var err = newsForm.querySelector(".js-news-err");
+            if (!err) { err = document.createElement("p"); err.className = "js-news-err"; err.style.cssText = "color:var(--gold-soft);font-size:.78rem;margin-top:.5rem"; newsForm.appendChild(err); }
+            err.innerHTML = 'Sorry — that didn’t go through. Email <a href="mailto:' + CONTACT.email + '" style="color:var(--gold-soft);text-decoration:underline">' + CONTACT.email + '</a>.';
+          });
+      });
+    }
   }
 
   /* ---------- concierge ---------- */
@@ -334,12 +418,17 @@
       els.forEach(function (e) { e.classList.add("in"); });
       return;
     }
+    var fired = false;
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+        if (en.isIntersecting) { fired = true; en.target.classList.add("in"); io.unobserve(en.target); }
       });
     }, { rootMargin: "0px 0px -12% 0px" });
     els.forEach(function (e) { io.observe(e); });
+    // safety net: if the observer never fired in 3s (broken/blocked), reveal all
+    setTimeout(function () {
+      if (!fired) els.forEach(function (e) { e.classList.add("in"); });
+    }, 3000);
   }
 
   /* ---------- parallax ---------- */
@@ -573,6 +662,7 @@
       if (/^(https?:|mailto:|tel:)/.test(href)) return;
       if (href.charAt(0) === "#") return;
       if (!/\.html(\?|#|$)/.test(href)) return; // only internal .html pages
+      if (href.split("#")[0] === path) return;  // same page → no transition/overlay
       e.preventDefault();
       overlay.classList.add("active");
       var done = false;

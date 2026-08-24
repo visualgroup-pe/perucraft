@@ -306,10 +306,24 @@ button { font: inherit; cursor: pointer; }
 }
 .site-header:not(.scrolled) .menu-btn.on-hero { color: var(--ivory-50); }
 
+/* compact WhatsApp CTA next to the hamburger (mobile only) */
+.header-wa {
+  display: inline-flex; width: 2.75rem; height: 2.75rem;
+  align-items: center; justify-content: center;
+  color: var(--charcoal);
+}
+.site-header:not(.scrolled) .header-wa.on-hero { color: var(--ivory-50); }
+.site-header.menu-open .header-wa.on-hero { color: var(--charcoal); }
+
 @media (min-width: 1024px) {
   .nav { display: flex; }
   .header-cta { display: block; }
   .menu-btn { display: none; }
+  .header-wa { display: none; }
+}
+/* keep the top-level nav from overflowing on narrow desktops */
+@media (min-width: 1024px) and (max-width: 1180px) {
+  .nav { gap: 1.6rem; }
 }
 
 /* mobile menu */
@@ -376,7 +390,8 @@ button { font: inherit; cursor: pointer; }
 .nav__item > a { display: inline-flex; align-items: center; gap: 0.28rem; }
 .nav__caret { flex: none; transition: transform 0.3s var(--ease); }
 .nav__item:hover > a .nav__caret,
-.nav__item:focus-within > a .nav__caret { transform: rotate(180deg); }
+.nav__item:focus-within > a .nav__caret,
+.nav__item.sub-open > a .nav__caret { transform: rotate(180deg); }
 .subnav {
   position: absolute; top: 100%; left: 50%;
   transform: translateX(-50%) translateY(8px);
@@ -386,7 +401,8 @@ button { font: inherit; cursor: pointer; }
   z-index: 60;
 }
 .nav__item:hover .subnav,
-.nav__item:focus-within .subnav {
+.nav__item:focus-within .subnav,
+.nav__item.sub-open .subnav {
   opacity: 1; visibility: visible; pointer-events: auto;
   transform: translateX(-50%) translateY(0);
 }
@@ -726,6 +742,7 @@ button { font: inherit; cursor: pointer; }
 .footer { background: var(--forest-deep); color: var(--ivory); position: relative; }
 .footer__grid { display: grid; gap: 3rem; padding-block: clamp(3.5rem, 7vw, 6rem); }
 @media (min-width: 1024px) { .footer__grid { grid-template-columns: 1.4fr 1fr 1fr 1.1fr; } }
+@media (min-width: 1024px) { .footer__grid--no-news { grid-template-columns: 1.6fr 1fr 1fr; } }
 .footer h4 { font-family: var(--font-sans); font-size: 0.68rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold-soft); }
 .footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1rem; }
 .footer a { font-size: 0.95rem; color: rgba(241,236,225,0.75); transition: color 0.3s; }
