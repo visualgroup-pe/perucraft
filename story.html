@@ -7,6 +7,7 @@
 <meta name="description" content="Peru is not a place you visit — it's a place you feel. A visual journey from Lima to the southern Andes, Lake Titicaca, Cusco and the Amazon, crafted by Patricia." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@300;400;500;600&display=swap" />
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="styles.css" />
   <!-- SEO base URL: https://visualgroup-pe.github.io/perucraft/ — TODO(owner): actualizar al migrar al dominio propio -->
@@ -42,7 +43,7 @@
 
   <!-- PAGE HERO -->
   <section class="pagehero">
-    <div class="pagehero__media"><img src="assets/img/1568729670692-0d2de9a3c027.jpg" alt="The Sacred Valley near Cusco at golden hour" fetchpriority="high"></div>
+    <div class="pagehero__media"><picture><source type="image/webp" srcset="assets/img/1568729670692-0d2de9a3c027-400.webp 400w, assets/img/1568729670692-0d2de9a3c027-800.webp 800w, assets/img/1568729670692-0d2de9a3c027-1600.webp 1600w" sizes="100vw"><img src="assets/img/1568729670692-0d2de9a3c027.jpg" alt="The Sacred Valley near Cusco at golden hour" fetchpriority="high" width="1600" height="669"></picture></div>
     <div class="pagehero__wash"></div>
     <div class="pagehero__inner">
       <span class="eyebrow on-dark"><span class="chakana js-chakana" data-grad style="width:.9rem;height:.9rem"></span><span class="rule"></span>The Brand Story</span>
@@ -55,7 +56,7 @@
   <section class="section bg-ivory-50" id="patricia">
     <div class="container split" style="align-items:start">
       <div class="figure-frame reveal reveal--left" style="position:sticky;top:6rem">
-        <img data-parallax="0.05" src="assets/img/patricia-story.jpeg" alt="Patricia, founder of Perú Crafted Experiences" loading="lazy">
+        <picture><source type="image/webp" srcset="assets/img/patricia-story-400.webp 400w, assets/img/patricia-story-716.webp 716w" sizes="(max-width:768px) 100vw, 50vw"><img data-parallax="0.05" src="assets/img/patricia-story.jpeg" alt="Patricia, founder of Perú Crafted Experiences" loading="lazy" width="716" height="896"></picture>
         <div style="margin-top:1.25rem" class="stack gap-4">
           <span class="sign" style="font-family:var(--font-serif);font-size:1.8rem;color:var(--terracotta)">Patricia</span>
           <span class="eyebrow">Founder &amp; Journey Designer</span>
@@ -84,10 +85,10 @@
           <span class="carousel__count"></span>
           <div class="carousel__viewport">
             <div class="carousel__track">
-              <figure class="carousel__slide"><img src="assets/img/lima-plaza.jpg" alt="Lima's Plaza de Armas, the cathedral and the bronze fountain" loading="lazy"><figcaption><span>Plaza de Armas</span>The colonial heart &amp; its cathedral</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/lima-coast.jpg" alt="The Miraflores coastline above the Pacific" loading="lazy"><figcaption><span>Miraflores</span>The city poised above the Pacific</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/lima-colonial.jpg" alt="A colourful colonial square in Lima" loading="lazy"><figcaption><span>Barranco</span>Bohemian streets &amp; colonial colour</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/1607490441160-32aa935d3fba.jpg" alt="Refined Peruvian cuisine" loading="lazy"><figcaption><span>The Table</span>One of the world's great food capitals</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/lima-plaza-400.webp 400w, assets/img/lima-plaza-800.webp 800w, assets/img/lima-plaza-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/lima-plaza.jpg" alt="Lima's Plaza de Armas, the cathedral and the bronze fountain" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Plaza de Armas</span>The colonial heart &amp; its cathedral</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/lima-coast-400.webp 400w, assets/img/lima-coast-800.webp 800w, assets/img/lima-coast-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/lima-coast.jpg" alt="The Miraflores coastline above the Pacific" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Miraflores</span>The city poised above the Pacific</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/lima-colonial-400.webp 400w, assets/img/lima-colonial-800.webp 800w, assets/img/lima-colonial-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/lima-colonial.jpg" alt="A colourful colonial square in Lima" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Barranco</span>Bohemian streets &amp; colonial colour</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/1607490441160-32aa935d3fba-400.webp 400w, assets/img/1607490441160-32aa935d3fba-800.webp 800w, assets/img/1607490441160-32aa935d3fba-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/1607490441160-32aa935d3fba.jpg" alt="Refined Peruvian cuisine" loading="lazy" width="1600" height="1067"></picture><figcaption><span>The Table</span>One of the world's great food capitals</figcaption></figure>
             </div>
           </div>
           <button class="carousel__nav carousel__nav--prev" type="button" aria-label="Previous image"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
@@ -123,11 +124,11 @@
           <span class="carousel__count"></span>
           <div class="carousel__viewport">
             <div class="carousel__track">
-              <figure class="carousel__slide"><img src="assets/img/arequipa.jpg" alt="Arequipa, the white city, beneath the Misti volcano" loading="lazy"><figcaption><span>Arequipa</span>The white city beneath the Misti</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/arequipa-santacatalina.jpg" alt="The ochre and red cloisters of the Santa Catalina Monastery" loading="lazy"><figcaption><span>Santa Catalina</span>Sillar cloisters in ochre &amp; red</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/colca-condor.jpg" alt="An Andean condor soaring over the peaks above the Colca canyon" loading="lazy"><figcaption><span>Colca</span>The flight of the condor</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/1536704271660-d219aa1bd6eb.jpg" alt="A woman of the altiplano in traditional dress" loading="lazy"><figcaption><span>The Altiplano</span>Faces &amp; warmth of the high plateau</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/1474903914960-c3f6602ebb5a.jpg" alt="Puno on the shore of Lake Titicaca" loading="lazy"><figcaption><span>To Puno</span>The city on the shore of the lake</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/arequipa-400.webp 400w, assets/img/arequipa-800.webp 800w, assets/img/arequipa-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/arequipa.jpg" alt="Arequipa, the white city, beneath the Misti volcano" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Arequipa</span>The white city beneath the Misti</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/arequipa-santacatalina-400.webp 400w, assets/img/arequipa-santacatalina-800.webp 800w, assets/img/arequipa-santacatalina-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/arequipa-santacatalina.jpg" alt="The ochre and red cloisters of the Santa Catalina Monastery" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Santa Catalina</span>Sillar cloisters in ochre &amp; red</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/colca-condor-400.webp 400w, assets/img/colca-condor-800.webp 800w, assets/img/colca-condor-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/colca-condor.jpg" alt="An Andean condor soaring over the peaks above the Colca canyon" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Colca</span>The flight of the condor</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/1536704271660-d219aa1bd6eb-400.webp 400w, assets/img/1536704271660-d219aa1bd6eb-800.webp 800w, assets/img/1536704271660-d219aa1bd6eb-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/1536704271660-d219aa1bd6eb.jpg" alt="A woman of the altiplano in traditional dress" loading="lazy" width="1600" height="1067"></picture><figcaption><span>The Altiplano</span>Faces &amp; warmth of the high plateau</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/1474903914960-c3f6602ebb5a-400.webp 400w, assets/img/1474903914960-c3f6602ebb5a-800.webp 800w, assets/img/1474903914960-c3f6602ebb5a-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/1474903914960-c3f6602ebb5a.jpg" alt="Puno on the shore of Lake Titicaca" loading="lazy" width="1600" height="1067"></picture><figcaption><span>To Puno</span>The city on the shore of the lake</figcaption></figure>
             </div>
           </div>
           <button class="carousel__nav carousel__nav--prev" type="button" aria-label="Previous image"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
@@ -154,10 +155,10 @@
           <span class="carousel__count"></span>
           <div class="carousel__viewport">
             <div class="carousel__track">
-              <figure class="carousel__slide"><img src="assets/img/titicaca-uros.jpg" alt="The Uros floating reed islands of Lake Titicaca" loading="lazy"><figcaption><span>The Uros</span>Floating islands woven from totora reed</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/titicaca-boat.jpg" alt="A traditional totora reed boat on Lake Titicaca" loading="lazy"><figcaption><span>Totora</span>Reed boats crossing the sacred water</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/1531968455001-5c5272a41129.jpg" alt="The vast blue expanse of Lake Titicaca" loading="lazy"><figcaption><span>The Lake</span>Blue immensity at 3,812 metres</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/titicaca-man.jpg" alt="An islander in traditional dress on Lake Titicaca" loading="lazy"><figcaption><span>Living Culture</span>Taquile &amp; the Uros — an ancestral welcome</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/titicaca-uros-400.webp 400w, assets/img/titicaca-uros-800.webp 800w, assets/img/titicaca-uros-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/titicaca-uros.jpg" alt="The Uros floating reed islands of Lake Titicaca" loading="lazy" width="1600" height="1067"></picture><figcaption><span>The Uros</span>Floating islands woven from totora reed</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/titicaca-boat-400.webp 400w, assets/img/titicaca-boat-800.webp 800w, assets/img/titicaca-boat-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/titicaca-boat.jpg" alt="A traditional totora reed boat on Lake Titicaca" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Totora</span>Reed boats crossing the sacred water</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/1531968455001-5c5272a41129-400.webp 400w, assets/img/1531968455001-5c5272a41129-800.webp 800w, assets/img/1531968455001-5c5272a41129-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/1531968455001-5c5272a41129.jpg" alt="The vast blue expanse of Lake Titicaca" loading="lazy" width="1600" height="1067"></picture><figcaption><span>The Lake</span>Blue immensity at 3,812 metres</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/titicaca-man-400.webp 400w, assets/img/titicaca-man-800.webp 800w, assets/img/titicaca-man-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/titicaca-man.jpg" alt="An islander in traditional dress on Lake Titicaca" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Living Culture</span>Taquile &amp; the Uros — an ancestral welcome</figcaption></figure>
             </div>
           </div>
           <button class="carousel__nav carousel__nav--prev" type="button" aria-label="Previous image"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
@@ -187,10 +188,10 @@
           <span class="carousel__count"></span>
           <div class="carousel__viewport">
             <div class="carousel__track">
-              <figure class="carousel__slide"><img src="assets/img/1526392060635-9d6019884377.jpg" alt="Machu Picchu in the golden light of dawn" loading="lazy"><figcaption><span>Machu Picchu</span>The citadel at first light</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/1568729670692-0d2de9a3c027.jpg" alt="The Sacred Valley of the Incas" loading="lazy"><figcaption><span>Sacred Valley</span>Pisac, Ollantaytambo &amp; the salt pans of Maras</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/1568805778719-c768512debe8.jpg" alt="Andean hands at a backstrap loom" loading="lazy"><figcaption><span>Chinchero</span>Ancestral weaving with natural dyes</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/cusco.jpg" alt="An aerial view of Cusco's Plaza de Armas and terracotta rooftops" loading="lazy"><figcaption><span>Cusco</span>The living capital of the Inca world</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/1526392060635-9d6019884377-400.webp 400w, assets/img/1526392060635-9d6019884377-800.webp 800w, assets/img/1526392060635-9d6019884377-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/1526392060635-9d6019884377.jpg" alt="Machu Picchu in the golden light of dawn" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Machu Picchu</span>The citadel at first light</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/1568729670692-0d2de9a3c027-400.webp 400w, assets/img/1568729670692-0d2de9a3c027-800.webp 800w, assets/img/1568729670692-0d2de9a3c027-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/1568729670692-0d2de9a3c027.jpg" alt="The Sacred Valley of the Incas" loading="lazy" width="1600" height="669"></picture><figcaption><span>Sacred Valley</span>Pisac, Ollantaytambo &amp; the salt pans of Maras</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/1568805778719-c768512debe8-400.webp 400w, assets/img/1568805778719-c768512debe8-800.webp 800w, assets/img/1568805778719-c768512debe8-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/1568805778719-c768512debe8.jpg" alt="Andean hands at a backstrap loom" loading="lazy" width="1600" height="2400"></picture><figcaption><span>Chinchero</span>Ancestral weaving with natural dyes</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/cusco-400.webp 400w, assets/img/cusco-800.webp 800w, assets/img/cusco-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/cusco.jpg" alt="An aerial view of Cusco's Plaza de Armas and terracotta rooftops" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Cusco</span>The living capital of the Inca world</figcaption></figure>
             </div>
           </div>
           <button class="carousel__nav carousel__nav--prev" type="button" aria-label="Previous image"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
@@ -220,8 +221,8 @@
           <span class="carousel__count"></span>
           <div class="carousel__viewport">
             <div class="carousel__track">
-              <figure class="carousel__slide"><img src="assets/img/1598837218686-a456fdaa5cf3.jpg" alt="A canoe on a quiet Amazon river" loading="lazy"><figcaption><span>By River</span>Into the rainforest, at the water's pace</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/1769794142275-ed099e69b59b.jpg" alt="Golden light over the Amazon at dusk" loading="lazy"><figcaption><span>At Dusk</span>Gold on the water, and the jungle waking</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/1598837218686-a456fdaa5cf3-400.webp 400w, assets/img/1598837218686-a456fdaa5cf3-800.webp 800w, assets/img/1598837218686-a456fdaa5cf3-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/1598837218686-a456fdaa5cf3.jpg" alt="A canoe on a quiet Amazon river" loading="lazy" width="1600" height="1067"></picture><figcaption><span>By River</span>Into the rainforest, at the water's pace</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/1769794142275-ed099e69b59b-400.webp 400w, assets/img/1769794142275-ed099e69b59b-800.webp 800w, assets/img/1769794142275-ed099e69b59b-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/1769794142275-ed099e69b59b.jpg" alt="Golden light over the Amazon at dusk" loading="lazy" width="1600" height="1060"></picture><figcaption><span>At Dusk</span>Gold on the water, and the jungle waking</figcaption></figure>
             </div>
           </div>
           <button class="carousel__nav carousel__nav--prev" type="button" aria-label="Previous image"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
@@ -240,10 +241,10 @@
           <span class="carousel__count"></span>
           <div class="carousel__viewport">
             <div class="carousel__track">
-              <figure class="carousel__slide"><img src="assets/img/1566793772361-1d5d9cefbd12.jpg" alt="Peruvians in traditional dress" loading="lazy"><figcaption><span>Celebration</span>Colour, ceremony &amp; the pride of a nation</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/dancers.jpg" alt="Dancers performing a traditional Peruvian dance" loading="lazy"><figcaption><span>Marinera</span>Dancers &amp; the rhythm of celebration</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/1568322503882-d119ddcb1c93.jpg" alt="A young man in a traditional poncho" loading="lazy"><figcaption><span>The Highlands</span>Music, colour &amp; living heritage</figcaption></figure>
-              <figure class="carousel__slide"><img src="assets/img/1589682449071-d13c27d1c298.jpg" alt="Community weavers spinning wool" loading="lazy"><figcaption><span>Artisan Hands</span>Weaving passed down through generations</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/1566793772361-1d5d9cefbd12-400.webp 400w, assets/img/1566793772361-1d5d9cefbd12-800.webp 800w, assets/img/1566793772361-1d5d9cefbd12-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/1566793772361-1d5d9cefbd12.jpg" alt="Peruvians in traditional dress" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Celebration</span>Colour, ceremony &amp; the pride of a nation</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/dancers-400.webp 400w, assets/img/dancers-800.webp 800w, assets/img/dancers-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/dancers.jpg" alt="Dancers performing a traditional Peruvian dance" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Marinera</span>Dancers &amp; the rhythm of celebration</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/1568322503882-d119ddcb1c93-400.webp 400w, assets/img/1568322503882-d119ddcb1c93-800.webp 800w, assets/img/1568322503882-d119ddcb1c93-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/1568322503882-d119ddcb1c93.jpg" alt="A young man in a traditional poncho" loading="lazy" width="1600" height="2406"></picture><figcaption><span>The Highlands</span>Music, colour &amp; living heritage</figcaption></figure>
+              <figure class="carousel__slide"><picture><source type="image/webp" srcset="assets/img/1589682449071-d13c27d1c298-400.webp 400w, assets/img/1589682449071-d13c27d1c298-800.webp 800w, assets/img/1589682449071-d13c27d1c298-1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw"><img src="assets/img/1589682449071-d13c27d1c298.jpg" alt="Community weavers spinning wool" loading="lazy" width="1600" height="1067"></picture><figcaption><span>Artisan Hands</span>Weaving passed down through generations</figcaption></figure>
             </div>
           </div>
           <button class="carousel__nav carousel__nav--prev" type="button" aria-label="Previous image"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
@@ -262,7 +263,7 @@
 
   <!-- CTA -->
   <section class="finalcta">
-    <div class="finalcta__media"><img data-parallax="0.12" src="assets/img/1668538528234-71adcc6687af.jpg" alt="Alpacas and the Andes" loading="lazy"></div>
+    <div class="finalcta__media"><picture><source type="image/webp" srcset="assets/img/1668538528234-71adcc6687af-400.webp 400w, assets/img/1668538528234-71adcc6687af-800.webp 800w, assets/img/1668538528234-71adcc6687af-1600.webp 1600w" sizes="100vw"><img data-parallax="0.12" src="assets/img/1668538528234-71adcc6687af.jpg" alt="Alpacas and the Andes" loading="lazy" width="1600" height="1067"></picture></div>
     <div class="finalcta__wash"></div>
     <div class="container">
       <div class="center reveal" style="max-width:46rem;margin-inline:auto">

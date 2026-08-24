@@ -254,7 +254,7 @@
     c.innerHTML =
       '<div class="concierge__card" role="dialog" aria-label="Message Patricia">' +
         '<div class="concierge__head">' +
-          '<span class="concierge__avatar"><img src="' + CONTACT.portrait + '" alt="Patricia"><span class="concierge__dot"></span></span>' +
+          '<span class="concierge__avatar"><img src="' + CONTACT.portrait + '" alt="Patricia" width="44" height="44"><span class="concierge__dot"></span></span>' +
           '<span class="concierge__name"><span class="n">Patricia</span><span class="s">Usually replies within a few hours</span></span>' +
           '<button class="concierge__close" aria-label="Close">' + IC.close + "</button>" +
         "</div>" +
@@ -267,7 +267,7 @@
       '<div style="display:flex;align-items:center;gap:.5rem">' +
         '<button class="concierge__teaser" type="button">Hello — need a hand?</button>' +
         '<button class="concierge__trigger pulse-ring" aria-label="Message Patricia" aria-expanded="false">' +
-          '<span class="concierge__avatar"><img src="' + CONTACT.portrait + '" alt=""></span>' +
+          '<span class="concierge__avatar"><img src="' + CONTACT.portrait + '" alt="" width="44" height="44"></span>' +
           '<span class="t"><span class="n">Patricia</span><span class="o">Online</span></span>' +
         "</button>" +
       "</div>";
