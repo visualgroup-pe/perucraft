@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://visualgroup-pe.github.io/perucraft/sitemap.xml

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO(owner): actualizar el dominio base al migrar desde GitHub Pages. Excluye payment-success/payment-cancelled (noindex). -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://visualgroup-pe.github.io/perucraft/</loc><priority>1.0</priority></url>
+  <url><loc>https://visualgroup-pe.github.io/perucraft/story.html</loc><priority>0.8</priority></url>
+  <url><loc>https://visualgroup-pe.github.io/perucraft/experiences.html</loc><priority>0.8</priority></url>
+  <url><loc>https://visualgroup-pe.github.io/perucraft/journeys.html</loc><priority>0.9</priority></url>
+  <url><loc>https://visualgroup-pe.github.io/perucraft/journey-grand-peru.html</loc><priority>0.7</priority></url>
+  <url><loc>https://visualgroup-pe.github.io/perucraft/journey-unforgettable-peru.html</loc><priority>0.7</priority></url>
+  <url><loc>https://visualgroup-pe.github.io/perucraft/journey-majestic-peru.html</loc><priority>0.7</priority></url>
+  <url><loc>https://visualgroup-pe.github.io/perucraft/journey-cusco-essentials.html</loc><priority>0.7</priority></url>
+  <url><loc>https://visualgroup-pe.github.io/perucraft/contact.html</loc><priority>0.8</priority></url>
+  <url><loc>https://visualgroup-pe.github.io/perucraft/payments.html</loc><priority>0.4</priority></url>
+  <url><loc>https://visualgroup-pe.github.io/perucraft/privacy.html</loc><priority>0.2</priority></url>
+  <url><loc>https://visualgroup-pe.github.io/perucraft/terms.html</loc><priority>0.2</priority></url>
+</urlset>
