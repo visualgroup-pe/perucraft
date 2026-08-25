@@ -62,7 +62,10 @@
       { label: "Cusco Essentials · 3 Days", href: "journey-cusco-essentials.html" },
     ] },
     { label: "Contact", href: "contact.html" },
-    { label: "Payments", href: "payments.html" },
+    // NOTE: Payments intentionally NOT in the primary nav. It is a service page
+    // for clients who already have an agreed itinerary — reachable only by direct
+    // URL, the booking-confirmation email, and a discreet "Already a client" link
+    // in the footer bottom bar (see buildFooter). Keep it out of NAV.
   ];
 
   /* ---------- chakana svg ---------- */
@@ -303,8 +306,7 @@
           '<li><a href="experiences.html">Experiences</a></li>' +
           '<li><a href="journeys.html">Journeys</a></li>' +
           '<li><a href="story.html">Meet Patricia</a></li>' +
-          '<li><a href="contact.html">Contact</a></li>' +
-          '<li><a href="payments.html">Make a Payment</a></li></ul></div>' +
+          '<li><a href="contact.html">Contact</a></li></ul></div>' +
         '<div><h4>Connect</h4><ul>' +
           '<li><a href="' + CONTACT.waHref + '" target="_blank" rel="noopener">WhatsApp</a></li>' +
           (ig ? '<li><a href="' + ig + '" target="_blank" rel="noopener">Instagram</a></li>' : "") +
@@ -320,7 +322,7 @@
       "</div>" +
       '<div class="container"><div class="footer__bottom">' +
         "<p>© " + new Date().getFullYear() + " Perú Crafted Experiences. All rights reserved.</p>" +
-        '<ul class="footer__legal"><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul>' +
+        '<ul class="footer__legal"><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li><li><a href="payments.html">Already a client? Make a payment</a></li></ul>' +
       "</div></div>";
 
     var newsForm = f.querySelector(".js-news");
@@ -656,6 +658,58 @@
     });
   }
 
+  /* ---------- dates CTA ("When would you like to travel?") ----------
+     Primary conversion unit. Renders a lightweight two-field form (month of
+     departure + number of travellers) into any <div class="js-dates-cta">.
+     It does NOT submit anything — it forwards the visitor to contact.html with
+     ?journey=…&month=…&travellers=… so the enquiry arrives already qualified
+     (contact.html reads those params). No-JS visitors keep the plain fallback
+     link that lives inside the placeholder. */
+  var MONTHS = ["January","February","March","April","May","June",
+    "July","August","September","October","November","December"];
+  function buildDatesCTA() {
+    var nodes = [].slice.call(document.querySelectorAll(".js-dates-cta"));
+    if (!nodes.length) return;
+
+    // next 18 months of departure options (from next month), plus "Not sure yet"
+    var now = new Date();
+    var monthOpts = '<option value="" selected>Month of departure</option>';
+    for (var k = 1; k <= 18; k++) {
+      var d = new Date(now.getFullYear(), now.getMonth() + k, 1);
+      var val = d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2);
+      monthOpts += '<option value="' + val + '">' + MONTHS[d.getMonth()] + " " + d.getFullYear() + "</option>";
+    }
+    monthOpts += '<option value="unsure">Not sure yet</option>';
+
+    var partyVals = ["1", "2", "3", "4", "5", "6", "7+"];
+    var partyOpts = '<option value="" selected>Travellers</option>' +
+      partyVals.map(function (v) { return '<option value="' + v + '">' + v + (v === "1" ? " traveller" : " travellers") + "</option>"; }).join("");
+
+    nodes.forEach(function (node) {
+      var journey = node.getAttribute("data-journey") || "";
+      node.innerHTML =
+        '<form class="datescta__form" novalidate>' +
+          '<label class="datescta__field"><span class="u-sr-only">Month of departure</span>' +
+            '<select name="month" aria-label="Month of departure">' + monthOpts + "</select></label>" +
+          '<label class="datescta__field"><span class="u-sr-only">Number of travellers</span>' +
+            '<select name="travellers" aria-label="Number of travellers">' + partyOpts + "</select></label>" +
+          '<button class="btn btn--gold datescta__go" type="submit">Let&rsquo;s talk ' + IC.arrow + "</button>" +
+        "</form>" +
+        '<p class="datescta__note">No commitment. Patricia replies personally &mdash; usually the same day.</p>';
+
+      var form = node.querySelector("form");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var qs = [];
+        if (journey) qs.push("journey=" + encodeURIComponent(journey));
+        var m = form.month.value, t = form.travellers.value;
+        if (m) qs.push("month=" + encodeURIComponent(m));
+        if (t) qs.push("travellers=" + encodeURIComponent(t));
+        location.href = "contact.html" + (qs.length ? "?" + qs.join("&") : "");
+      });
+    });
+  }
+
   /* ---------- preloader ---------- */
   function buildPreloader() {
     var seen = sessionStorage.getItem("pce_seen");
@@ -768,6 +822,7 @@
     initCarousels();
     initQuotes();
     initEnquiryForm();
+    buildDatesCTA();
     buildTransitions();
   });
 })();

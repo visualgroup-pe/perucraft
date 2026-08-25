@@ -744,6 +744,23 @@ button { font: inherit; cursor: pointer; }
 .finalcta__wash { position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(37,63,49,0.92), rgba(37,63,49,0.72) 50%, rgba(37,63,49,0.82)); }
 .finalcta h2 { color: var(--ivory-50); font-size: clamp(2.4rem, 6vw, 4.5rem); font-weight: 300; }
 
+/* dates CTA — primary "When would you like to travel?" conversion unit */
+.u-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.datescta__form { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; max-width: 40rem; margin-inline: auto; }
+.datescta__field { display: flex; flex: 1 1 12rem; min-width: 0; }
+.datescta__field select {
+  width: 100%; font: inherit; font-size: 0.95rem; color: var(--charcoal);
+  background: var(--ivory-50); border: 1px solid var(--stone-line); border-radius: 4px;
+  padding: 0.85rem 1rem; cursor: pointer; transition: border-color 0.3s;
+  -webkit-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b5b4a' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat: no-repeat; background-position: right 0.9rem center;
+}
+.datescta__field select:focus { outline: none; border-color: var(--gold); }
+.datescta__go { flex: 1 1 12rem; justify-content: center; }
+.datescta__note { margin-top: 1rem; font-size: 0.85rem; color: rgba(250,249,247,0.82); }
+@media (min-width: 560px) { .datescta__go { flex: 0 0 auto; } }
+
 /* footer */
 .footer { background: var(--forest-deep); color: var(--ivory); position: relative; }
 .footer__grid { display: grid; gap: 3rem; padding-block: clamp(3.5rem, 7vw, 6rem); }
