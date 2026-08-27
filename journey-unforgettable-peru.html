@@ -54,6 +54,19 @@
     </div>
   </section>
 
+  <!-- PRODUCT META -->
+  <section class="product-meta">
+    <div class="container">
+      <div class="product-meta__inner reveal">
+        <span class="product-meta__cat">Private Journey</span>
+        <span class="product-meta__dur">13 days</span>
+        <!-- TODO(owner): precio "desde" REAL de este itinerario. NO inventar ni estimar. Mientras no lo tengas se muestra "Tailored pricing". Cuando lo tengas, sustituye por: <span class="product-meta__price">from <b>£X,XXX</b> per person</span> -->
+        <span class="product-meta__price">Tailored pricing</span>
+        <p class="product-meta__cond">Prices are per person, based on two travellers sharing a room. International flights are not included — we quote them separately according to your dates and preferences.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- OVERVIEW -->
   <section class="section bg-ivory-50">
     <div class="container split">
@@ -63,17 +76,66 @@
         <h2 class="h-sec">The great sweep of Peru</h2>
         <p class="lede">Colonial Lima, the coast at Paracas and the enigma of the Nazca lines, Arequipa and the condors of Colca, Lake Titicaca and, at the last, Cusco and Machu Picchu.</p>
         <p class="muted" style="max-width:34rem">Thirteen days that follow the old sun route up into the Andes, gathering the country's great landscapes and cultures as they climb. Every day remains yours to reshape, in pace, comfort and palate.</p>
-        <h3 style="font-size:1.25rem;margin-top:.5rem">What's included</h3>
-        <ul class="included">
-          <li>Private transfers and ground transport throughout</li>
-          <li>Expert local guides at each destination</li>
-          <li>A Ballestas Islands boat trip and a Nazca Lines scenic flight</li>
-          <li>The scenic tourist train to Machu Picchu, with a guided visit</li>
-          <li>Selected tastings and cultural experiences along the way</li>
-          <li>Boutique accommodation chosen to your style</li>
-        </ul>
-        <div class="row"><a class="btn btn--gold js-enquire" href="#" target="_blank" rel="noopener">Enquire about this journey <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn--outline" href="journeys.html">All journeys</a></div>
+        <h3 style="font-size:1.25rem;margin-top:.5rem">Places you'll visit</h3>
+        <!-- TODO(owner)/Bloque 5: por ahora enlazan a experiences.html; en el Bloque 5 pasarán a páginas de destino propias. -->
+        <nav class="places" aria-label="Places on this journey">
+          <a href="experiences.html">Lima</a>
+          <a href="experiences.html">Paracas</a>
+          <a href="experiences.html">Ica</a>
+          <a href="experiences.html">Nazca</a>
+          <a href="experiences.html">Arequipa</a>
+          <a href="experiences.html">Colca Canyon</a>
+          <a href="experiences.html">Lake Titicaca</a>
+          <a href="experiences.html">Cusco</a>
+          <a href="experiences.html">Machu Picchu</a>
+        </nav>
+        <div class="row"><a class="btn js-enquire" href="#" target="_blank" rel="noopener">Ask Patricia about this journey <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn--outline" href="journeys.html">All journeys</a></div>
       </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S INCLUDED / NOT INCLUDED -->
+  <section class="section bg-sand">
+    <div class="container">
+      <div class="sec-head reveal" style="margin-bottom:2rem">
+        <span class="eyebrow"><span class="chakana js-chakana" style="width:.9rem;height:.9rem"></span><span class="rule"></span>The Detail</span>
+        <h2 class="h-sec">What's included</h2>
+      </div>
+      <div class="grid grid-2">
+        <div class="reveal">
+          <h3 style="font-size:1.15rem;margin-bottom:1rem">Included in your journey</h3>
+          <ul class="included">
+            <li>Private transfers and ground transport throughout</li>
+            <li>Expert local guides at each destination</li>
+            <li>A Ballestas Islands boat trip and a Nazca Lines scenic flight</li>
+            <li>The scenic tourist train to Machu Picchu, with a guided visit</li>
+            <li>Selected tastings and cultural experiences along the way</li>
+            <li>Boutique accommodation chosen to your style</li>
+          </ul>
+          <!-- TODO(owner): confirmar inclusiones CONCRETAS y verificables con esta plantilla, y sustituir los puntos genéricos de arriba cuando las tengas. NO inventar.
+               - Traslados: ¿privados con chófer? ¿aeropuerto incluido?
+               - Alojamiento: nº de noches + categoría por ciudad
+               - Comidas: qué desayunos/almuerzos/cenas
+               - Experiencias guiadas: nombre concreto de cada una
+               - Trenes y vuelos internos: operador y clase
+               - Entradas y permisos: Machu Picchu, Huayna Picchu, etc.
+               - Asistencia: ¿24 h? ¿en español e inglés?
+               - Impuestos y cargos obligatorios -->
+        </div>
+        <div class="reveal" data-delay="1">
+          <h3 style="font-size:1.15rem;margin-bottom:1rem">Not included</h3>
+          <ul class="included included--out">
+            <li>International flights to and from Peru</li>
+            <li>Travel insurance</li>
+            <li>Peru entry requirements or visa fees, where applicable</li>
+            <li>Meals not listed in your final itinerary</li>
+            <li>Gratuities, drinks and personal expenses</li>
+            <li>Optional excursions and activities</li>
+          </ul>
+          <!-- TODO(owner): ajusta las exclusiones a tu operativa real antes de publicar. -->
+        </div>
+      </div>
+      <p class="muted" style="margin-top:1.75rem;font-size:.85rem;max-width:46rem">Prices are per person, based on two travellers sharing a room. International flights are not included — we quote them separately according to your dates and preferences.</p>
     </div>
   </section>
 
@@ -99,6 +161,45 @@
         <li class="itin__day reveal"><div class="itin__no">Day 12</div><div><h3 class="itin__place">Machu Picchu</h3><p class="itin__desc">A full day at the citadel, by scenic train, with a guided visit.</p></div></li>
         <li class="itin__day reveal"><div class="itin__no">Day 13</div><div><h3 class="itin__place">Departure from Cusco</h3><p class="itin__desc">A last morning in the Andes before your onward journey.</p></div></li>
       </ol>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD THE DOSSIER -->
+  <section class="section--tight bg-ivory">
+    <div class="container center reveal">
+      <a class="btn btn--outline" href="assets/dossiers/unforgettable-peru.pdf" download>Download the itinerary (PDF) <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg></a>
+      <p class="muted" style="margin-top:.75rem;font-size:.82rem">No email required — the full day-by-day, with pricing notes and how to reach Patricia. Regenerate with <code>scripts/build-dossiers.sh</code>.</p>
+    </div>
+  </section>
+
+  <!-- ACCOMMODATION — TODO(owner): sección NO publicada por falta de datos.
+       NO usar hoteles de ejemplo ni "hotel boutique en el Valle Sagrado".
+       Para publicarla, rellena por cada parada: nombre exacto del hotel · ciudad · nº de noches,
+       una frase de por qué Patricia lo eligió, y una foto (propia o cedida por el hotel).
+       Estructura lista (descomentar y completar cuando tengas los datos):
+    <section class="section bg-ivory-50">
+      <div class="container">
+        <div class="sec-head reveal"><span class="eyebrow"><span class="chakana js-chakana" style="width:.9rem;height:.9rem"></span><span class="rule"></span>Where You'll Stay</span><h2 class="h-sec">Your accommodation</h2></div>
+        <div class="grid grid-3 mt-8">
+          <article class="jcard reveal"><div class="jcard__media"><img src="assets/img/HOTEL-1.jpg" alt="HOTEL NAME" loading="lazy" width="1600" height="1067"></div><div class="jcard__body"><h3>HOTEL NAME</h3><p class="jcard__route">CITY · N nights</p><p>Why Patricia chose it.</p></div></article>
+        </div>
+      </div>
+    </section>
+  -->
+
+  <!-- YOUR DESIGNER -->
+  <section class="section bg-ivory-50">
+    <div class="container">
+      <div class="advisor reveal">
+        <!-- TODO(owner): retrato PROFESIONAL de Patricia. El actual es un selfie de baja resolución; a este nivel de precio, la foto resta credibilidad. -->
+        <img class="advisor__photo" src="assets/img/1523761415282-2106778cfb5a.jpeg" alt="Patricia, founder of Perú Crafted Experiences" width="900" height="1125" loading="lazy">
+        <div class="stack gap-4">
+          <span class="eyebrow"><span class="chakana js-chakana" style="width:.9rem;height:.9rem"></span><span class="rule"></span>Your Designer</span>
+          <h2 class="h-sec" style="font-size:clamp(1.8rem,3.6vw,2.6rem)">Designed personally by Patricia</h2>
+          <p class="advisor__cred">Peruvian-born and based in the UK for over 20 years, Patricia designs every itinerary herself and knows the guides, cooks and families along the way in person. You deal directly with her — never a call centre.</p>
+          <div class="row"><a class="btn btn--wa js-wa" href="#" target="_blank" rel="noopener">Ask Patricia about this journey</a></div>
+        </div>
+      </div>
     </div>
   </section>
 
