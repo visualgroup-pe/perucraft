@@ -782,6 +782,41 @@ button { font: inherit; cursor: pointer; }
 .advisor__photo { width: min(11rem, 40vw); aspect-ratio: 4/5; object-fit: cover; border-radius: 6px; }
 .advisor__cred { color: var(--charcoal-soft); max-width: 34rem; }
 
+/* wishlist — header counter, card & detail-page save toggles, saved view */
+.header-saved { display: inline-flex; align-items: center; gap: 0.3rem; color: inherit; }
+.header-saved svg { fill: none; stroke: currentColor; stroke-width: 1.6; }
+.header-saved.has-saved svg { fill: var(--gold-soft); stroke: var(--gold-soft); }
+.header-saved__n { font-size: 0.72rem; font-weight: 600; min-width: 0.9rem; text-align: center; }
+.m-saved { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; color: var(--ivory-50); font-size: 0.95rem; }
+.m-saved svg { fill: none; stroke: currentColor; stroke-width: 1.6; }
+.jcard__save {
+  position: absolute; top: 0.75rem; right: 0.75rem; z-index: 3;
+  width: 2.5rem; height: 2.5rem; border-radius: 999px; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; color: #fff;
+  background: rgba(20,30,25,0.45); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  transition: background 0.3s, transform 0.2s;
+}
+.jcard__save svg { fill: none; stroke: currentColor; stroke-width: 1.7; }
+.jcard__save:hover { background: rgba(20,30,25,0.72); transform: scale(1.06); }
+.jcard__save.is-saved svg { fill: var(--gold-soft); stroke: var(--gold-soft); }
+.meta-save {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 0.45rem;
+  background: none; border: 1px solid var(--stone-line); border-radius: 999px;
+  padding: 0.5rem 0.95rem; cursor: pointer; color: var(--charcoal); font: inherit; font-size: 0.85rem;
+  transition: border-color 0.3s, color 0.3s;
+}
+.meta-save svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; }
+.meta-save:hover { border-color: var(--gold); }
+.meta-save.is-saved { color: var(--terracotta); border-color: var(--gold); }
+.meta-save.is-saved svg { fill: var(--terracotta); stroke: var(--terracotta); }
+.enq-context {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  background: var(--ivory-50); border: 1px solid var(--gold); border-left-width: 3px; border-radius: 4px;
+  padding: 0.7rem 0.9rem; margin-bottom: 0.3rem; font-size: 0.9rem;
+}
+.enq-context strong { color: var(--forest); }
+.enq-context__change { background: none; border: none; color: var(--terracotta); text-decoration: underline; cursor: pointer; font: inherit; font-size: 0.82rem; }
+
 /* footer */
 .footer { background: var(--forest-deep); color: var(--ivory); position: relative; }
 .footer__grid { display: grid; gap: 3rem; padding-block: clamp(3.5rem, 7vw, 6rem); }

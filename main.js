@@ -68,6 +68,28 @@
     // in the footer bottom bar (see buildFooter). Keep it out of NAV.
   ];
 
+  /* ---------- journey catalogue ----------
+     Canonical data for the four real itineraries, shared by the enquiry-context
+     banner (contact.html), the wishlist toggles and the saved-journeys view. */
+  var JOURNEYS_INFO = {
+    "grand-peru":         { name: "Grand Peru",         dur: "20 days", url: "journey-grand-peru.html",         img: "assets/img/1526392060635-9d6019884377" },
+    "unforgettable-peru": { name: "Unforgettable Peru", dur: "13 days", url: "journey-unforgettable-peru.html", img: "assets/img/colca-canyon" },
+    "majestic-peru":      { name: "Majestic Peru",      dur: "10 days", url: "journey-majestic-peru.html",      img: "assets/img/1580619305218-8423a7ef79b4" },
+    "cusco-essentials":   { name: "Cusco Essentials",   dur: "3 days",  url: "journey-cusco-essentials.html",   img: "assets/img/sacred-valley-vista" },
+  };
+  function slugFromHref(href) { var m = /journey-([a-z-]+)\.html/.exec(href || ""); return m ? m[1] : ""; }
+
+  /* ---------- wishlist storage (localStorage, no backend) ---------- */
+  var SAVED_KEY = "pce_saved";
+  function getSaved() { try { return (JSON.parse(localStorage.getItem(SAVED_KEY)) || []).filter(function (s) { return JOURNEYS_INFO[s]; }); } catch (e) { return []; } }
+  function setSaved(a) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(a)); } catch (e) {} }
+  function isSaved(slug) { return getSaved().indexOf(slug) !== -1; }
+  function toggleSaved(slug) {
+    var a = getSaved(), i = a.indexOf(slug);
+    if (i === -1) a.push(slug); else a.splice(i, 1);
+    setSaved(a); updateSavedCount(); return i === -1;
+  }
+
   /* ---------- chakana svg ---------- */
   var _cid = 0;
   var CHAK_RECTS = [
@@ -105,6 +127,7 @@
     close: "<svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5'><path d='M6 6l12 12M18 6L6 18'/></svg>",
     wa: "<svg width='20' height='20' viewBox='0 0 32 32' fill='currentColor'><path d='M16.04 4c-6.63 0-12 5.37-12 12 0 2.11.55 4.17 1.6 5.99L4 28l6.18-1.62A11.9 11.9 0 0 0 16.04 28c6.63 0 12-5.37 12-12s-5.37-12-12-12Zm0 21.82c-1.84 0-3.65-.5-5.22-1.43l-.37-.22-3.67.96.98-3.58-.24-.37a9.8 9.8 0 0 1-1.5-5.2c0-5.42 4.41-9.82 9.83-9.82 2.63 0 5.09 1.02 6.95 2.88a9.75 9.75 0 0 1 2.88 6.95c0 5.42-4.41 9.83-9.82 9.83Zm5.39-7.35c-.29-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.29-.77.96-.94 1.16-.17.2-.35.22-.64.07-.29-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.04-.17-.29-.02-.45.13-.6.13-.13.29-.35.44-.52.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.29-1.04 1.02-1.04 2.48 0 1.46 1.06 2.87 1.21 3.07.15.2 2.09 3.2 5.07 4.48.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.56-.35Z'/></svg>",
     insta: "<svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5'><rect x='2' y='2' width='20' height='20' rx='5.5'/><circle cx='12' cy='12' r='4.2'/><circle cx='17.4' cy='6.6' r='1.1' fill='currentColor' stroke='none'/></svg>",
+    heart: "<svg width='18' height='18' viewBox='0 0 24 24' aria-hidden='true'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>",
   };
 
   /* ---------- current page ---------- */
@@ -166,12 +189,14 @@
       '<div class="header-inner">' +
       brandHTML("on-hero") +
       '<nav class="nav on-hero" aria-label="Primary">' + navLinks + "</nav>" +
+      '<a class="header-saved on-hero" href="saved.html" aria-label="Saved journeys" title="Saved journeys">' + IC.heart + '<span class="header-saved__n">0</span></a>' +
       '<div class="header-cta"><a class="btn btn--sm btn--ivory js-enquire" href="' + CONTACT.waHref + '" target="_blank" rel="noopener">Enquire Now</a></div>' +
       '<a class="header-wa on-hero js-wa" href="' + CONTACT.waHref + '" target="_blank" rel="noopener" aria-label="Enquire on WhatsApp">' + IC.wa + "</a>" +
       '<button class="menu-btn on-hero" aria-label="Open menu" aria-expanded="false">' + IC.menu + "</button>" +
       "</div>" +
       '<div class="mobile-menu">' +
       mobileLinks +
+      '<a class="m-saved" href="saved.html">' + IC.heart + ' Saved journeys (<span class="header-saved__n">0</span>)</a>' +
       '<a class="btn" href="' + CONTACT.waHref + '" target="_blank" rel="noopener">Enquire Now</a>' +
       "</div>";
     document.body.insertBefore(header, document.body.firstChild);
@@ -601,17 +626,21 @@
     if (!form) return;
 
     function waUrl(d) {
+      var journey = d.get("journey");
       var lines = [
         "Hello Patricia, I'd love to plan a bespoke Peru journey.",
         "",
+      ];
+      if (journey) lines.push("Journey: " + journey);
+      lines.push(
         "Name: " + (d.get("name") || ""),
         "Email: " + (d.get("email") || ""),
         "When: " + (d.get("when") || "flexible"),
         "Travellers: " + (d.get("party") || ""),
         "Style: " + (d.get("style") || ""),
         "",
-        (d.get("message") || ""),
-      ];
+        (d.get("message") || "")
+      );
       return "https://wa.me/" + WA_DIGITS + "?text=" + encodeURIComponent(lines.join("\n"));
     }
     function feedback(html) {
@@ -707,6 +736,145 @@
         if (t) qs.push("travellers=" + encodeURIComponent(t));
         location.href = "contact.html" + (qs.length ? "?" + qs.join("&") : "");
       });
+    });
+  }
+
+  /* ---------- wishlist UI ---------- */
+  function updateSavedCount() {
+    var n = getSaved().length;
+    document.querySelectorAll(".header-saved__n").forEach(function (c) { c.textContent = n; });
+    document.querySelectorAll(".header-saved").forEach(function (el) {
+      el.setAttribute("data-count", n);
+      el.classList.toggle("has-saved", n > 0);
+    });
+  }
+  function initWishlist() {
+    // save toggles on journey cards
+    document.querySelectorAll(".jcard").forEach(function (card) {
+      if (card.closest(".js-saved-view")) return;
+      var link = card.querySelector('a[href*="journey-"]');
+      var slug = link ? slugFromHref(link.getAttribute("href")) : "";
+      if (!slug || !JOURNEYS_INFO[slug] || card.querySelector(".jcard__save")) return;
+      var media = card.querySelector(".jcard__media") || card;
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "jcard__save" + (isSaved(slug) ? " is-saved" : "");
+      btn.setAttribute("aria-pressed", isSaved(slug) ? "true" : "false");
+      btn.setAttribute("aria-label", isSaved(slug) ? "Remove from saved journeys" : "Save this journey");
+      btn.innerHTML = IC.heart;
+      btn.addEventListener("click", function (e) {
+        e.preventDefault(); e.stopPropagation();
+        var on = toggleSaved(slug);
+        btn.classList.toggle("is-saved", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+        btn.setAttribute("aria-label", on ? "Remove from saved journeys" : "Save this journey");
+      });
+      if (getComputedStyle(media).position === "static") media.style.position = "relative";
+      media.appendChild(btn);
+    });
+    // save toggle on a journey detail page (in the product-meta bar)
+    var mslug = slugFromHref(path);
+    if (mslug && JOURNEYS_INFO[mslug]) {
+      var meta = document.querySelector(".product-meta__inner");
+      if (meta && !meta.querySelector(".meta-save")) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "meta-save" + (isSaved(mslug) ? " is-saved" : "");
+        b.setAttribute("aria-pressed", isSaved(mslug) ? "true" : "false");
+        b.innerHTML = IC.heart + "<span>" + (isSaved(mslug) ? "Saved" : "Save this journey") + "</span>";
+        b.addEventListener("click", function () {
+          var on = toggleSaved(mslug);
+          b.classList.toggle("is-saved", on);
+          b.setAttribute("aria-pressed", on ? "true" : "false");
+          b.querySelector("span").textContent = on ? "Saved" : "Save this journey";
+        });
+        meta.appendChild(b);
+      }
+    }
+    updateSavedCount();
+  }
+
+  /* ---------- saved-journeys view (saved.html) ---------- */
+  function initSavedView() {
+    var wrap = document.querySelector(".js-saved-view");
+    if (!wrap) return;
+    function render() {
+      var saved = getSaved();
+      if (!saved.length) {
+        wrap.innerHTML =
+          '<div class="center" style="max-width:34rem;margin-inline:auto">' +
+            '<p class="lede">You haven&rsquo;t saved any journeys yet.</p>' +
+            '<p class="muted" style="margin:.75rem 0 1.5rem">Tap the heart on any journey to keep it here while you decide.</p>' +
+            '<a class="btn btn--gold" href="journeys.html">Browse the journeys</a>' +
+          "</div>";
+        return;
+      }
+      var cards = saved.map(function (s) {
+        var j = JOURNEYS_INFO[s];
+        return '<article class="jcard sheen">' +
+          '<div class="jcard__media"><picture><source type="image/webp" srcset="' + j.img + '-400.webp 400w, ' + j.img + '-800.webp 800w, ' + j.img + '-1600.webp 1600w" sizes="(max-width:768px) 100vw, 50vw"><img src="' + j.img + '.jpg" alt="' + j.name + '" loading="lazy" width="1600" height="1067"></picture>' +
+            '<div class="veil"></div><span class="jcard__dur">' + j.dur + '</span>' +
+            '<button type="button" class="jcard__save is-saved" data-remove="' + s + '" aria-label="Remove from saved journeys">' + IC.heart + '</button>' +
+          "</div>" +
+          '<div class="jcard__body"><h3>' + j.name + "</h3>" +
+            '<div class="jcard__foot"><a class="tlink on-dark" href="' + j.url + '">View the itinerary ' + IC.arrow + "</a></div>" +
+          "</div></article>";
+      }).join("");
+      var lines = ["Hello Patricia, I'd love to talk about these journeys:", ""]
+        .concat(saved.map(function (s) { return "• " + JOURNEYS_INFO[s].name + " (" + JOURNEYS_INFO[s].dur + ")"; }));
+      var wa = "https://wa.me/" + WA_DIGITS + "?text=" + encodeURIComponent(lines.join("\n"));
+      var cta =
+        '<div class="center reveal" style="margin-top:2.5rem">' +
+          '<a class="btn btn--gold btn--lg" href="contact.html?journeys=' + saved.join(",") + '">Enquire about these journeys ' + IC.arrow + "</a>" +
+          '<p class="mt-3" style="font-size:.9rem;color:var(--charcoal-soft)">Prefer WhatsApp? <a class="tlink" style="display:inline" href="' + wa + '" target="_blank" rel="noopener">Send Patricia your shortlist</a></p>' +
+        "</div>";
+      wrap.innerHTML = '<div class="grid grid-2">' + cards + "</div>" + cta;
+      wrap.querySelectorAll("[data-remove]").forEach(function (btn) {
+        btn.addEventListener("click", function () { toggleSaved(btn.getAttribute("data-remove")); render(); });
+      });
+    }
+    render();
+  }
+
+  /* ---------- enquiry context (contact.html reads ?journey/journeys/month/travellers) ---------- */
+  function fmtMonth(v) {
+    if (!v) return "";
+    if (v === "unsure") return "Not sure yet";
+    var m = /^(\d{4})-(\d{2})$/.exec(v);
+    return m ? MONTHS[parseInt(m[2], 10) - 1] + " " + m[1] : v;
+  }
+  function initEnquiryContext() {
+    if (path !== "contact.html") return;
+    var form = document.querySelector(".js-enquiry-form");
+    if (!form) return;
+    var params = new URLSearchParams(location.search);
+    // prefill approximate date + travellers from the dates CTA
+    var month = fmtMonth(params.get("month"));
+    var travellers = params.get("travellers");
+    var when = form.querySelector("#f-when"), party = form.querySelector("#f-party");
+    if (when && month) when.value = month;
+    if (party && travellers) party.value = travellers + (travellers === "1" ? " traveller" : " travellers");
+    // resolve journey(s)
+    var slugs = [];
+    var csv = params.get("journeys");
+    if (csv) slugs = csv.split(",").filter(function (s) { return JOURNEYS_INFO[s]; });
+    else { var j = params.get("journey"); if (j && JOURNEYS_INFO[j]) slugs = [j]; }
+    if (!slugs.length) return;
+    var names = slugs.map(function (s) { return JOURNEYS_INFO[s].name + " · " + JOURNEYS_INFO[s].dur; });
+    // hidden field so the journey rides along in the payload + WhatsApp message
+    var hidden = document.createElement("input");
+    hidden.type = "hidden"; hidden.name = "journey"; hidden.value = names.join(", ");
+    form.insertBefore(hidden, form.firstChild);
+    // visible context banner with a "change" affordance
+    var banner = document.createElement("div");
+    banner.className = "enq-context";
+    banner.innerHTML =
+      '<span>Your enquiry about: <strong>' + names.join("</strong> &amp; <strong>") + "</strong></span>" +
+      '<button type="button" class="enq-context__change">Change</button>';
+    form.insertBefore(banner, form.firstChild);
+    banner.querySelector(".enq-context__change").addEventListener("click", function () {
+      if (hidden.parentNode) hidden.parentNode.removeChild(hidden);
+      if (banner.parentNode) banner.parentNode.removeChild(banner);
     });
   }
 
@@ -821,8 +989,11 @@
     initMarquee();
     initCarousels();
     initQuotes();
+    initEnquiryContext();
     initEnquiryForm();
     buildDatesCTA();
+    initWishlist();
+    initSavedView();
     buildTransitions();
   });
 })();
