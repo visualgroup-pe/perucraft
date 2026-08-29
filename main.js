@@ -346,7 +346,12 @@
         : "") +
       "</div>" +
       '<div class="container"><div class="footer__bottom">' +
-        "<p>© " + new Date().getFullYear() + " Perú Crafted Experiences. All rights reserved.</p>" +
+        "<p>© " + new Date().getFullYear() + " Perú Crafted Experiences. All rights reserved." +
+          // TODO(owner): en el pie deben figurar la RAZÓN SOCIAL registrada, el
+          // NÚMERO DE REGISTRO mercantil y el DOMICILIO SOCIAL (requisito en Reino
+          // Unido y señal de solvencia). NO inventar. Cuando los tengas, rellena el
+          // <span class="footer__company"> siguiente (se muestra al tener contenido).
+          '<span class="footer__company"></span></p>' +
         '<ul class="footer__legal"><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li><li><a href="payments.html">Already a client? Make a payment</a></li></ul>' +
       "</div></div>";
 
@@ -739,6 +744,38 @@
     });
   }
 
+  /* ---------- trust block ----------
+     Reusable three-pillar trust component, injected into any <section class="js-trust">
+     placed before the closing CTA. Facts only, no adjectives-as-proof.
+
+     COLUMN 2 IS A DELIBERATELY MARKED, RESERVED SLOT.
+     TODO(owner): aquí va la PROTECCIÓN FINANCIERA REAL del paquete
+     (Package Travel Regulations 2018 — cuenta fiduciaria, bono, seguro de
+     insolvencia, o afiliación tipo ATOL/ABTA/TTA SÓLO si se posee de verdad).
+     NO añadir NINGUNA insignia de acreditación mientras no exista: mostrarla
+     sin serlo es fraude. Hasta entonces la casilla queda marcada y sin claim. */
+  function trustCol(title, body, reserved) {
+    return '<div class="trust__col' + (reserved ? ' trust__col--reserved' : '') + '">' +
+      '<span class="trust__ic">' + chakana(true) + "</span>" +
+      "<h3>" + title + "</h3>" +
+      '<p' + (reserved ? ' class="muted trust__pending"' : '') + ">" + body + "</p>" +
+    "</div>";
+  }
+  function buildTrust() {
+    var nodes = document.querySelectorAll(".js-trust");
+    if (!nodes.length) return;
+    var html =
+      '<div class="container"><div class="grid grid-3 trust__grid">' +
+        trustCol("Born in Peru, based in the UK",
+          "Patricia is Peruvian and has lived in the UK for over 20 years, returning home regularly. The guides, cooks and families on your journey are people she knows in person.", false) +
+        trustCol("Financial protection",
+          "Details provided on enquiry.", true) +
+        trustCol("Straight to your designer",
+          "You plan directly with Patricia — the person who designs and runs your itinerary — never a call centre or a queue.", false) +
+      "</div></div>";
+    nodes.forEach(function (n) { n.innerHTML = html; });
+  }
+
   /* ---------- wishlist UI ---------- */
   function updateSavedCount() {
     var n = getSaved().length;
@@ -992,6 +1029,7 @@
     initEnquiryContext();
     initEnquiryForm();
     buildDatesCTA();
+    buildTrust();
     initWishlist();
     initSavedView();
     buildTransitions();
