@@ -14,8 +14,7 @@
     waHref: "https://wa.me/" + WA_DIGITS + "?text=" + WA_MSG,
     // TODO(owner): confirmar el correo definitivo de la marca (placeholder por ahora; NO usar el correo de la agencia).
     email: "hello@perucraftedexperiences.com",
-    // TODO(owner): pegar la URL real de Instagram. Con el valor vacío, el icono y el enlace se ocultan en el footer.
-    instagram: "",
+    instagram: "https://www.instagram.com/perucraftedexperiences",
     greeting:
       "Hello, I'm Patricia. I'd be delighted to help you plan your journey — do say hello whenever suits you.",
     portrait:
@@ -347,11 +346,9 @@
       "</div>" +
       '<div class="container"><div class="footer__bottom">' +
         "<p>© " + new Date().getFullYear() + " Perú Crafted Experiences. All rights reserved." +
-          // TODO(owner): en el pie deben figurar la RAZÓN SOCIAL registrada, el
-          // NÚMERO DE REGISTRO mercantil y el DOMICILIO SOCIAL (requisito en Reino
-          // Unido y señal de solvencia). NO inventar. Cuando los tengas, rellena el
-          // <span class="footer__company"> siguiente (se muestra al tener contenido).
-          '<span class="footer__company"></span></p>' +
+          // TODO(owner): falta el DOMICILIO SOCIAL registrado (registered office address),
+          // requisito en Reino Unido. Añádelo a la línea de abajo cuando lo tengas.
+          '<span class="footer__company">Perú Crafted Experiences Ltd &middot; Registered in England &amp; Wales &middot; Company No. 17362845</span></p>' +
         '<ul class="footer__legal"><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li><li><a href="payments.html">Already a client? Make a payment</a></li></ul>' +
       "</div></div>";
 

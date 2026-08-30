@@ -39,7 +39,7 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --gutter: clamp(1.25rem, 5vw, 6rem);
   --maxw: 1440px;
-  --header-h: 96px;
+  --header-h: 112px;
 }
 
 /* ---------- reset & base ---------- */
@@ -99,7 +99,7 @@ button { font: inherit; cursor: pointer; }
 }
 
 .section { padding-block: clamp(4.5rem, 10vw, 9rem); position: relative; }
-.section--tight { padding-block: clamp(3rem, 7vw, 6rem); }
+.section--tight { padding-block: clamp(3rem, 7vw, 6rem); position: relative; }
 
 .bg-forest { background: var(--forest); color: var(--ivory); }
 .bg-forest-deep { background: var(--forest-deep); color: var(--ivory); }
@@ -254,19 +254,20 @@ button { font: inherit; cursor: pointer; }
   flex-direction: column;
   align-items: center;
   line-height: 1;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
-.brand .chakana { width: 2.15rem; height: 2.15rem; transition: transform 0.7s var(--ease); }
+.site-header .brand { position: relative; top: 10px; }
+.brand .chakana { width: 2.55rem; height: 2.55rem; transition: transform 0.7s var(--ease); }
 .brand:hover .chakana { transform: rotate(45deg); }
 .brand .word {
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 1.62rem;
+  font-size: 1.95rem;
   color: var(--espresso);
   transition: color 0.5s;
 }
 .brand .sub {
-  font-size: 0.56rem;
+  font-size: 0.62rem;
   font-weight: 500;
   letter-spacing: 0.32em;
   text-transform: uppercase;
