@@ -643,6 +643,7 @@
         "When: " + (d.get("when") || "flexible"),
         "Travellers: " + (d.get("party") || ""),
         "Style: " + (d.get("style") || ""),
+        "Accommodation: " + (d.get("accommodation") || ""),
         "",
         (d.get("message") || "")
       );
@@ -767,7 +768,7 @@
     var html =
       '<div class="container"><div class="grid grid-3 trust__grid">' +
         trustCol("Born in Peru, based in the UK",
-          "Patricia is Peruvian and has lived in the UK for over 20 years, returning home regularly. The guides, cooks and families on your journey are people she knows in person.", false) +
+          "Patricia is Peruvian and has lived in the UK for nearly 25 years, returning home regularly. The guides, cooks and families on your journey are people she knows in person.", false) +
         trustCol("Financial protection",
           "Details provided on enquiry.", true) +
         trustCol("Straight to your designer",

@@ -39,7 +39,7 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --gutter: clamp(1.25rem, 5vw, 6rem);
   --maxw: 1440px;
-  --header-h: 76px;
+  --header-h: 96px;
 }
 
 /* ---------- reset & base ---------- */
@@ -255,17 +255,17 @@ button { font: inherit; cursor: pointer; }
   line-height: 1;
   gap: 0.35rem;
 }
-.brand .chakana { width: 1.75rem; height: 1.75rem; transition: transform 0.7s var(--ease); }
+.brand .chakana { width: 2.15rem; height: 2.15rem; transition: transform 0.7s var(--ease); }
 .brand:hover .chakana { transform: rotate(45deg); }
 .brand .word {
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.62rem;
   color: var(--espresso);
   transition: color 0.5s;
 }
 .brand .sub {
-  font-size: 0.5rem;
+  font-size: 0.56rem;
   font-weight: 500;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -275,9 +275,9 @@ button { font: inherit; cursor: pointer; }
 .site-header:not(.scrolled) .brand.on-hero .word { color: var(--ivory-50); }
 .site-header:not(.scrolled) .brand.on-hero .sub { color: rgba(241,236,225,0.8); }
 
-.nav { display: none; gap: 2.2rem; align-items: center; }
+.nav { display: none; gap: 2.4rem; align-items: center; }
 .nav a {
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   letter-spacing: 0.02em;
   color: var(--charcoal-soft);
   padding-bottom: 3px;
@@ -318,7 +318,8 @@ button { font: inherit; cursor: pointer; }
 .site-header.menu-open .header-wa.on-hero { color: var(--charcoal); }
 
 @media (min-width: 1024px) {
-  .nav { display: flex; }
+  .header-inner { position: relative; }
+  .nav { display: flex; position: absolute; left: 50%; transform: translateX(-50%); }
   .header-cta { display: block; }
   .menu-btn { display: none; }
   .header-wa { display: none; }
