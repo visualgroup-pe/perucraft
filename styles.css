@@ -797,7 +797,9 @@ button { font: inherit; cursor: pointer; }
 .site-header:not(.scrolled) .header-social.on-hero .header-social__a { color: var(--ivory-50); }
 .m-social { display: flex; gap: 1.1rem; margin-top: 0.75rem; }
 .m-social__a { display: inline-flex; color: var(--charcoal); opacity: 0.85; }
-.header-saved { display: inline-flex; align-items: center; gap: 0.3rem; color: inherit; }
+.header-saved { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--charcoal-soft); }
+.site-header:not(.scrolled) .header-saved.on-hero { color: var(--ivory-50); }
+.site-header.menu-open .header-saved.on-hero { color: var(--charcoal-soft); }
 .header-saved svg { fill: none; stroke: currentColor; stroke-width: 1.6; }
 .header-saved.has-saved svg { fill: var(--gold-soft); stroke: var(--gold-soft); }
 .header-saved__n { font-size: 0.72rem; font-weight: 600; min-width: 0.9rem; text-align: center; }
