@@ -322,7 +322,6 @@ button { font: inherit; cursor: pointer; }
 @media (min-width: 1024px) {
   .header-inner { position: relative; }
   .nav { display: flex; position: absolute; left: 50%; transform: translateX(-50%); }
-  .header-saved { margin-left: auto; }
   .header-cta { display: block; }
   .menu-btn { display: none; }
   .header-wa { display: none; }
@@ -787,6 +786,16 @@ button { font: inherit; cursor: pointer; }
 .advisor__cred { color: var(--charcoal-soft); max-width: 34rem; }
 
 /* wishlist — header counter, card & detail-page save toggles, saved view */
+.header-actions { display: flex; align-items: center; gap: 1.1rem; }
+.header-social { display: none; align-items: center; gap: 0.65rem; }
+@media (min-width: 1024px) { .header-social { display: inline-flex; } }
+.header-social__a { display: inline-flex; color: inherit; opacity: 0.8; transition: opacity 0.3s, color 0.3s; }
+.header-social__a:hover { opacity: 1; color: var(--gold-soft); }
+.header-social__a.is-soon { opacity: 0.45; }
+.header-social__a.is-soon:hover { opacity: 0.7; color: inherit; cursor: default; }
+.site-header:not(.scrolled) .header-social.on-hero .header-social__a { color: var(--ivory-50); }
+.m-social { display: flex; gap: 1.1rem; margin-top: 0.75rem; }
+.m-social__a { display: inline-flex; color: var(--charcoal); opacity: 0.85; }
 .header-saved { display: inline-flex; align-items: center; gap: 0.3rem; color: inherit; }
 .header-saved svg { fill: none; stroke: currentColor; stroke-width: 1.6; }
 .header-saved.has-saved svg { fill: var(--gold-soft); stroke: var(--gold-soft); }

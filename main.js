@@ -15,6 +15,10 @@
     // TODO(owner): confirmar el correo definitivo de la marca (placeholder por ahora; NO usar el correo de la agencia).
     email: "hello@perucraftedexperiences.com",
     instagram: "https://www.instagram.com/perucraftedexperiences",
+    // TODO(owner): URLs reales de Facebook y TikTok. Vacías = el icono se muestra
+    // pero desactivado ("coming soon") hasta que las pegues aquí.
+    facebook: "",
+    tiktok: "",
     greeting:
       "Hello, I'm Patricia. I'd be delighted to help you plan your journey — do say hello whenever suits you.",
     portrait:
@@ -127,6 +131,8 @@
     wa: "<svg width='20' height='20' viewBox='0 0 32 32' fill='currentColor'><path d='M16.04 4c-6.63 0-12 5.37-12 12 0 2.11.55 4.17 1.6 5.99L4 28l6.18-1.62A11.9 11.9 0 0 0 16.04 28c6.63 0 12-5.37 12-12s-5.37-12-12-12Zm0 21.82c-1.84 0-3.65-.5-5.22-1.43l-.37-.22-3.67.96.98-3.58-.24-.37a9.8 9.8 0 0 1-1.5-5.2c0-5.42 4.41-9.82 9.83-9.82 2.63 0 5.09 1.02 6.95 2.88a9.75 9.75 0 0 1 2.88 6.95c0 5.42-4.41 9.83-9.82 9.83Zm5.39-7.35c-.29-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.29-.77.96-.94 1.16-.17.2-.35.22-.64.07-.29-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.04-.17-.29-.02-.45.13-.6.13-.13.29-.35.44-.52.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.29-1.04 1.02-1.04 2.48 0 1.46 1.06 2.87 1.21 3.07.15.2 2.09 3.2 5.07 4.48.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.56-.35Z'/></svg>",
     insta: "<svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5'><rect x='2' y='2' width='20' height='20' rx='5.5'/><circle cx='12' cy='12' r='4.2'/><circle cx='17.4' cy='6.6' r='1.1' fill='currentColor' stroke='none'/></svg>",
     heart: "<svg width='18' height='18' viewBox='0 0 24 24' aria-hidden='true'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>",
+    facebook: "<svg width='18' height='18' viewBox='0 0 24 24' fill='currentColor'><path d='M14 21v-8h2.7l.4-3.1H14V7.9c0-.9.25-1.5 1.55-1.5H17.6V3.6c-.3-.04-1.35-.13-2.56-.13-2.53 0-4.24 1.55-4.24 4.38V9.9H8v3.1h2.8V21H14z'/></svg>",
+    tiktok: "<svg width='18' height='18' viewBox='0 0 24 24' fill='currentColor'><path d='M16.6 3c.3 2.1 1.48 3.35 3.4 3.48V9c-1.16.11-2.28-.27-3.4-.95v5.6c0 3.38-2.66 5.86-5.86 5.5-2.76-.31-4.7-2.86-4.32-5.66.34-2.48 2.62-4.28 5.12-4.05v2.55c-.42-.13-.9-.15-1.4-.03-1 .24-1.7 1.16-1.55 2.25.15 1.02 1.1 1.74 2.12 1.62 1.06-.12 1.82-1.02 1.82-2.12V3h4.07z'/></svg>",
   };
 
   /* ---------- current page ---------- */
@@ -151,6 +157,16 @@
   function subAnchor(c) {
     var ext = c.external ? ' target="_blank" rel="noopener"' : "";
     return '<a href="' + c.href + '"' + ext + ">" + c.label + "</a>";
+  }
+
+  function socialLinks(cls) {
+    function item(url, label, icon) {
+      if (url) return '<a class="' + cls + '" href="' + url + '" target="_blank" rel="noopener" aria-label="' + label + '">' + icon + "</a>";
+      return '<a class="' + cls + ' is-soon" href="#" aria-label="' + label + ' (coming soon)" title="' + label + ' — coming soon">' + icon + "</a>";
+    }
+    return item(CONTACT.instagram, "Instagram", IC.insta) +
+           item(CONTACT.tiktok, "TikTok", IC.tiktok) +
+           item(CONTACT.facebook, "Facebook", IC.facebook);
   }
 
   function buildHeader() {
@@ -188,17 +204,26 @@
       '<div class="header-inner">' +
       brandHTML("on-hero") +
       '<nav class="nav on-hero" aria-label="Primary">' + navLinks + "</nav>" +
-      '<a class="header-saved on-hero" href="saved.html" aria-label="Saved journeys" title="Saved journeys">' + IC.heart + '<span class="header-saved__n">0</span></a>' +
-      '<div class="header-cta"><a class="btn btn--sm btn--ivory js-enquire" href="' + CONTACT.waHref + '" target="_blank" rel="noopener">Enquire Now</a></div>' +
-      '<a class="header-wa on-hero js-wa" href="' + CONTACT.waHref + '" target="_blank" rel="noopener" aria-label="Enquire on WhatsApp">' + IC.wa + "</a>" +
-      '<button class="menu-btn on-hero" aria-label="Open menu" aria-expanded="false">' + IC.menu + "</button>" +
+      '<div class="header-actions">' +
+        '<div class="header-social on-hero">' + socialLinks("header-social__a") + "</div>" +
+        '<a class="header-saved on-hero" href="saved.html" aria-label="Saved journeys" title="Saved journeys">' + IC.heart + '<span class="header-saved__n">0</span></a>' +
+        '<div class="header-cta"><a class="btn btn--sm btn--ivory js-enquire" href="' + CONTACT.waHref + '" target="_blank" rel="noopener">Enquire Now</a></div>' +
+        '<a class="header-wa on-hero js-wa" href="' + CONTACT.waHref + '" target="_blank" rel="noopener" aria-label="Enquire on WhatsApp">' + IC.wa + "</a>" +
+        '<button class="menu-btn on-hero" aria-label="Open menu" aria-expanded="false">' + IC.menu + "</button>" +
+      "</div>" +
       "</div>" +
       '<div class="mobile-menu">' +
       mobileLinks +
       '<a class="m-saved" href="saved.html">' + IC.heart + ' Saved journeys (<span class="header-saved__n">0</span>)</a>' +
+      '<div class="m-social">' + socialLinks("m-social__a") + "</div>" +
       '<a class="btn" href="' + CONTACT.waHref + '" target="_blank" rel="noopener">Enquire Now</a>' +
       "</div>";
     document.body.insertBefore(header, document.body.firstChild);
+
+    // placeholder social icons (Facebook/TikTok) — don't navigate until a real URL is set
+    header.querySelectorAll(".is-soon").forEach(function (a) {
+      a.addEventListener("click", function (e) { e.preventDefault(); });
+    });
 
     var menuBtn = header.querySelector(".menu-btn");
     var menu = header.querySelector(".mobile-menu");
