@@ -223,6 +223,7 @@ button { font: inherit; cursor: pointer; }
 
 /* ---------- chakana glyph ---------- */
 .chakana { display: block; width: 2rem; height: 2rem; color: var(--terracotta); }
+.chakana svg { display: block; width: 100%; height: 100%; }
 .chakana--grad { color: initial; }
 
 /* ---------- header ---------- */
@@ -320,6 +321,7 @@ button { font: inherit; cursor: pointer; }
 @media (min-width: 1024px) {
   .header-inner { position: relative; }
   .nav { display: flex; position: absolute; left: 50%; transform: translateX(-50%); }
+  .header-saved { margin-left: auto; }
   .header-cta { display: block; }
   .menu-btn { display: none; }
   .header-wa { display: none; }
