@@ -23,6 +23,15 @@
   .field input:focus, .field select:focus, .field textarea:focus { outline:none; border-color:var(--gold); }
   .form-grid { display:grid; gap:1.1rem; }
   @media (min-width:560px){ .form-grid .two { grid-template-columns:1fr 1fr; display:grid; gap:1.1rem; } }
+  .form-head { margin-bottom:.4rem; }
+  .field--interests { border:0; padding:0; margin:0; gap:.55rem; }
+  .field--interests legend { font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--charcoal-soft); padding:0; }
+  .chips { display:flex; flex-wrap:wrap; gap:.5rem; }
+  .chip { position:relative; display:inline-flex; }
+  .chip input { position:absolute; inset:0; opacity:0; margin:0; cursor:pointer; }
+  .chip span { padding:.45rem .9rem; border:1px solid var(--stone-line); border-radius:999px; font-size:.85rem; color:var(--charcoal); background:var(--ivory-50); transition:background .2s,color .2s,border-color .2s; cursor:pointer; }
+  .chip input:checked + span { background:var(--forest); color:var(--ivory-50); border-color:var(--forest); }
+  .chip input:focus-visible + span { outline:2px solid var(--gold); outline-offset:1px; }
 </style>
   <!-- SEO base URL: https://visualgroup-pe.github.io/perucraft/ — TODO(owner): actualizar al migrar al dominio propio -->
   <link rel="canonical" href="https://visualgroup-pe.github.io/perucraft/contact.html" />
@@ -83,23 +92,32 @@
       <!-- form -->
       <div class="reveal" data-delay="1" style="background:var(--sand-soft);border:1px solid var(--stone-line);border-radius:6px;padding:clamp(1.5rem,4vw,2.5rem)">
         <form class="form-grid js-enquiry-form">
+          <div class="form-head">
+            <h2 class="h-sec" style="font-size:clamp(1.55rem,3.2vw,2.1rem)">Start Your Crafted Peru Journey</h2>
+            <p class="muted" style="margin-top:.5rem">Tell us how you want to experience Peru, and we'll craft a journey that feels personal, meaningful and unforgettable.</p>
+          </div>
           <div class="two">
             <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" required></div>
-            <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" name="email" required></div>
+            <div class="field"><label for="f-email">Your email</label><input id="f-email" type="email" name="email" required></div>
           </div>
           <div class="two">
-            <div class="field"><label for="f-when">When (approx.)</label><input id="f-when" name="when" placeholder="e.g. May 2026"></div>
-            <div class="field"><label for="f-party">Travellers</label><input id="f-party" name="party" placeholder="e.g. 2 adults"></div>
+            <div class="field"><label for="f-location">Where are you based?</label><input id="f-location" name="location" placeholder="e.g. London, UK"></div>
+            <div class="field"><label for="f-when">Preferred travel dates</label><input id="f-when" name="when" placeholder="e.g. May 2026"></div>
           </div>
-          <div class="field"><label for="f-style">Travel style</label>
-            <select id="f-style" name="style">
-              <option>Budget-friendly &amp; local</option>
-              <option>Comfortable mid-range</option>
-              <option>Premium &amp; boutique</option>
-              <option>Luxury &amp; private</option>
-              <option>Not sure yet — advise me</option>
-            </select>
-          </div>
+          <div class="field"><label for="f-party">Who's travelling?</label><input id="f-party" name="party" placeholder="e.g. 2 adults, 1 child"></div>
+          <fieldset class="field field--interests">
+            <legend>What interests you most?</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="interests" value="Culture"><span>Culture</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="Gastronomy"><span>Gastronomy</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="Nature"><span>Nature</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="Traditions"><span>Traditions</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="Trails"><span>Trails</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="Markets"><span>Markets</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="Artisans"><span>Artisans</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="All of the above"><span>All of the above</span></label>
+            </div>
+          </fieldset>
           <div class="field"><label for="f-accom">Include accommodation?</label>
             <select id="f-accom" name="accommodation">
               <option>Yes, please include accommodation</option>
@@ -107,13 +125,13 @@
               <option>Not sure yet — advise me</option>
             </select>
           </div>
-          <div class="field"><label for="f-msg">Tell me about your dream journey</label><textarea id="f-msg" name="message" rows="4" placeholder="Interests, must-sees, food you love, pace…"></textarea></div>
+          <div class="field"><label for="f-msg">Tell us about the Peru you want to experience</label><textarea id="f-msg" name="message" rows="4" placeholder="Your tastes, pace, interests, must-sees, must-eats — anything that helps us craft your journey."></textarea></div>
           <label for="f-consent" style="display:flex;align-items:flex-start;gap:.55rem;text-transform:none;letter-spacing:0;font-size:.8rem;color:var(--charcoal-soft);line-height:1.5;cursor:pointer">
             <input type="checkbox" id="f-consent" name="consent" required style="width:auto;margin-top:.2rem;flex:none;accent-color:var(--forest)">
             <span>I have read the <a href="privacy.html" style="color:var(--terracotta);text-decoration:underline">privacy policy</a> and agree that Patricia may contact me about my journey.</span>
           </label>
-          <button class="btn btn--gold" type="submit" style="width:100%">Send via WhatsApp <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-          <p class="muted" style="font-size:.78rem;text-align:center">Prefer email? Write to <a class="js-email js-emailtext" href="#" style="color:var(--terracotta)">hello@perucraftedexperiences.com</a></p>
+          <button class="btn btn--gold" type="submit" style="width:100%">Submit <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <p class="muted" style="font-size:.82rem;text-align:center">We'll get back to you with a warm, personalised proposal crafted just for you.</p>
         </form>
       </div>
     </div>

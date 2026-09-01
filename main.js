@@ -680,12 +680,14 @@
         "",
       ];
       if (journey) lines.push("Journey: " + journey);
+      var interests = d.getAll ? d.getAll("interests").join(", ") : (d.get("interests") || "");
       lines.push(
         "Name: " + (d.get("name") || ""),
         "Email: " + (d.get("email") || ""),
-        "When: " + (d.get("when") || "flexible"),
-        "Travellers: " + (d.get("party") || ""),
-        "Style: " + (d.get("style") || ""),
+        "Based in: " + (d.get("location") || ""),
+        "Travel dates: " + (d.get("when") || "flexible"),
+        "Travelling: " + (d.get("party") || ""),
+        "Interests: " + interests,
         "Accommodation: " + (d.get("accommodation") || ""),
         "",
         (d.get("message") || "")
