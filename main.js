@@ -350,10 +350,20 @@
     var f = document.querySelector("footer.footer");
     if (!f) { f = document.createElement("footer"); f.className = "footer"; document.body.appendChild(f); }
     var ig = CONTACT.instagram;
-    var hasNews = !!NEWSLETTER_ENDPOINT;
     f.innerHTML =
       '<div class="greca on-dark" style="opacity:.4"></div>' +
-      '<div class="container footer__grid' + (hasNews ? '' : ' footer__grid--no-news') + '">' +
+      '<div class="footer__news-band"><div class="container footer__news-inner">' +
+        '<div class="footer__news-copy">' +
+          '<span class="footer__news-eyebrow">Subscribe · Newsletter</span>' +
+          '<h3 class="footer__news-h">Letters from Peru, every other week</h3>' +
+          '<p class="footer__news-sub">Stories, tables and quiet corners worth the journey — a short note from Patricia every two weeks. No spam, unsubscribe anytime.</p>' +
+        "</div>" +
+        '<div class="footer__news-formwrap">' +
+          '<form class="footer__news js-news"><input type="email" name="email" required placeholder="Your email" aria-label="Email"><button type="submit">Subscribe</button></form>' +
+          '<p class="footer__news-fine">We only use your email for the newsletter — see our <a href="privacy.html">privacy policy</a>.</p>' +
+        "</div>" +
+      "</div></div>" +
+      '<div class="container footer__grid footer__grid--no-news">' +
         '<div class="stack gap-6" style="align-items:flex-start">' +
           brandHTML("") +
           '<p style="max-width:20rem;color:rgba(241,236,225,.7);font-size:.95rem">Bespoke cultural and gastronomic journeys across Peru — designed personally, by hand, from the UK.</p>' +
@@ -368,15 +378,7 @@
         '<div><h4>Connect</h4><ul>' +
           '<li><a href="' + CONTACT.waHref + '" target="_blank" rel="noopener">WhatsApp</a></li>' +
           (ig ? '<li><a href="' + ig + '" target="_blank" rel="noopener">Instagram</a></li>' : "") +
-          (hasNews ? '<li><a href="contact.html">Newsletter</a></li>' : "") +
           "</ul></div>" +
-        (hasNews ?
-          '<div><h4>Newsletter</h4>' +
-            '<p style="color:rgba(241,236,225,.7);font-size:.9rem;margin-top:1rem">Occasional letters from Peru — stories, tables and quiet corners worth the journey.</p>' +
-            '<form class="footer__news js-news" style="margin-top:1rem"><input type="email" name="email" required placeholder="Your email" aria-label="Email"><button type="submit">Join</button></form>' +
-            '<p style="font-size:.72rem;color:rgba(241,236,225,.5);margin-top:.5rem">We only use your email for the newsletter — see our <a href="privacy.html" style="color:var(--gold-soft);text-decoration:underline">privacy policy</a>.</p>' +
-          "</div>"
-        : "") +
       "</div>" +
       '<div class="container"><div class="footer__bottom">' +
         "<p>© " + new Date().getFullYear() + " Perú Crafted Experiences. All rights reserved." +
@@ -390,14 +392,24 @@
     if (newsForm) {
       newsForm.addEventListener("submit", function (e) {
         e.preventDefault();
+        var input = newsForm.querySelector('input[name="email"]');
+        var email = input ? input.value : "";
+        function done() { newsForm.innerHTML = '<p class="footer__news-ok">Thank you — you’re on the list.</p>'; }
+        // TODO(owner): define NEWSLETTER_ENDPOINT (Mailchimp / Buttondown / Formspree)
+        // to capture subscribers automatically. Until then, the subscription is sent
+        // to Patricia by email so no sign-up is lost.
+        if (!NEWSLETTER_ENDPOINT) {
+          window.location.href = "mailto:" + CONTACT.email +
+            "?subject=" + encodeURIComponent("Newsletter subscription") +
+            "&body=" + encodeURIComponent("Please add me to the biweekly newsletter: " + email);
+          done();
+          return;
+        }
         var btn = newsForm.querySelector("button");
         var lbl = btn ? btn.textContent : "";
         if (btn) { btn.disabled = true; btn.textContent = "…"; }
         fetch(NEWSLETTER_ENDPOINT, { method: "POST", headers: { "Accept": "application/json" }, body: new FormData(newsForm) })
-          .then(function (r) {
-            if (!r.ok) throw 0;
-            newsForm.innerHTML = '<p style="color:var(--ivory-50);font-size:.9rem;padding:.6rem 0">Thank you — you’re on the list.</p>';
-          })
+          .then(function (r) { if (!r.ok) throw 0; done(); })
           .catch(function () {
             if (btn) { btn.disabled = false; btn.textContent = lbl; }
             var err = newsForm.querySelector(".js-news-err");

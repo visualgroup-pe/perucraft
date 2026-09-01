@@ -878,7 +878,18 @@ button { font: inherit; cursor: pointer; }
 .footer__news input { flex: 1; background: none; border: none; color: var(--ivory-50); padding: 0.7rem 0; font-size: 0.9rem; }
 .footer__news input::placeholder { color: rgba(241,236,225,0.4); }
 .footer__news input:focus { outline: none; }
-.footer__news button { background: none; border: none; color: var(--gold-soft); font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; padding-left: 0.75rem; }
+.footer__news button { background: none; border: none; color: var(--gold-soft); font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; padding-left: 0.75rem; cursor: pointer; }
+/* newsletter band (top of footer) */
+.footer__news-band { border-bottom: 1px solid rgba(250,249,247,0.12); }
+.footer__news-inner { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; align-items: center; justify-content: space-between; padding-block: clamp(2.25rem, 4vw, 3.25rem); }
+.footer__news-copy { max-width: 34rem; }
+.footer__news-eyebrow { display: inline-block; font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-soft); font-weight: 600; }
+.footer__news-h { font-family: var(--font-serif); font-weight: 400; font-size: clamp(1.4rem, 3vw, 2.1rem); color: var(--ivory-50); margin-top: 0.5rem; line-height: 1.15; }
+.footer__news-sub { color: rgba(241,236,225,0.72); font-size: 0.95rem; margin-top: 0.6rem; }
+.footer__news-formwrap { flex: 1 1 22rem; max-width: 30rem; }
+.footer__news-fine { font-size: 0.72rem; color: rgba(241,236,225,0.5); margin-top: 0.6rem; }
+.footer__news-fine a { color: var(--gold-soft); text-decoration: underline; }
+.footer__news-ok { color: var(--gold-soft); font-size: 0.98rem; padding: 0.7rem 0; }
 .footer__bottom { display: flex; flex-direction: column; gap: 1rem; border-top: 1px solid rgba(250,249,247,0.12); padding: 1.75rem 0; font-size: 0.78rem; color: rgba(241,236,225,0.55); }
 @media (min-width: 640px) { .footer__bottom { flex-direction: row; align-items: center; justify-content: space-between; } }
 .footer__legal { display: flex; gap: 1.5rem; list-style: none; }
