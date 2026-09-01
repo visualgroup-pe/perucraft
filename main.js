@@ -82,6 +82,15 @@
   };
   function slugFromHref(href) { var m = /journey-([a-z-]+)\.html/.exec(href || ""); return m ? m[1] : ""; }
 
+  /* Extra place images cycled inside each journey card (the card's base image is
+     slide 0; these follow). Only slugs whose .jpg exists in assets/img. */
+  var JOURNEY_PLACES = {
+    "grand-peru":         ["lima-coast", "paracasbay", "arequipa-plaza", "colcacannn", "titicacabarco", "guacamayos"],
+    "unforgettable-peru": ["lima-plaza", "nazca-lines", "arequipa-santacatalina", "titicaca-uros", "cusco", "1580619305218-8423a7ef79b4"],
+    "majestic-peru":      ["lima-palms", "mirayana", "colcacannn", "cusco", "1526392060635-9d6019884377", "coloresmoun"],
+    "cusco-essentials":   ["valle-sagrado", "sacsayhuaman-1", "1580619305218-8423a7ef79b4"],
+  };
+
   /* ---------- wishlist storage (localStorage, no backend) ---------- */
   var SAVED_KEY = "pce_saved";
   function getSaved() { try { return (JSON.parse(localStorage.getItem(SAVED_KEY)) || []).filter(function (s) { return JOURNEYS_INFO[s]; }); } catch (e) { return []; } }
@@ -799,6 +808,51 @@
     nodes.forEach(function (n) { n.innerHTML = html; });
   }
 
+  /* ---------- per-card place carousel ----------
+     Each journey card cross-fades through images of the places it includes
+     (base image = slide 0). Just-in-time image loading, paused off-screen. */
+  function initCardCarousels() {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.querySelectorAll(".jcard").forEach(function (card) {
+      if (card.closest(".js-saved-view")) return;
+      var link = card.querySelector('a[href*="journey-"]');
+      var slug = link ? slugFromHref(link.getAttribute("href")) : "";
+      var extra = JOURNEY_PLACES[slug];
+      if (!slug || !extra || !extra.length) return;
+      var media = card.querySelector(".jcard__media");
+      if (!media || media.dataset.carousel) return;
+      var base = media.querySelector("img");
+      if (!base) return;
+      media.dataset.carousel = "1";
+      base.classList.add("jcard__slide", "is-active");
+      var veil = media.querySelector(".veil");
+      var slides = [base];
+      extra.forEach(function (sl) {
+        var im = document.createElement("img");
+        im.className = "jcard__slide";
+        im.alt = "";
+        im.setAttribute("data-src", "assets/img/" + sl + ".jpg");
+        im.loading = "lazy";
+        if (veil) media.insertBefore(im, veil); else media.appendChild(im);
+        slides.push(im);
+      });
+      function load(k) { var s = slides[k]; if (s && s.getAttribute("data-src")) { s.src = s.getAttribute("data-src"); s.removeAttribute("data-src"); } }
+      var i = 0, timer = null;
+      function show(n) {
+        i = (n + slides.length) % slides.length;
+        load(i); load((i + 1) % slides.length);
+        slides.forEach(function (s, k) { s.classList.toggle("is-active", k === i); });
+      }
+      function start() { if (reduce || timer) return; timer = setInterval(function () { show(i + 1); }, 3800); }
+      function stop() { clearInterval(timer); timer = null; }
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (es) {
+          es.forEach(function (e) { if (e.isIntersecting) start(); else stop(); });
+        }, { threshold: 0.3 }).observe(card);
+      } else { start(); }
+    });
+  }
+
   /* ---------- wishlist UI ---------- */
   function updateSavedCount() {
     var n = getSaved().length;
@@ -1053,6 +1107,7 @@
     initEnquiryForm();
     buildDatesCTA();
     buildTrust();
+    initCardCarousels();
     initWishlist();
     initSavedView();
     buildTransitions();

@@ -583,6 +583,8 @@ button { font: inherit; cursor: pointer; }
 .jcard:hover { transform: translateY(-6px); border-color: rgba(212,160,55,0.4); }
 .jcard__media { position: relative; aspect-ratio: 16/10; overflow: hidden; }
 .jcard__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+.jcard__media[data-carousel] .jcard__slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s var(--ease); }
+.jcard__media[data-carousel] .jcard__slide.is-active { opacity: 1; }
 .jcard:hover .jcard__media img { transform: scale(1.07); }
 .jcard__media .veil { position: absolute; inset: 0; background: linear-gradient(to top, rgba(37,63,49,0.8), transparent 60%); }
 .jcard__dur {
