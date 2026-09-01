@@ -187,6 +187,10 @@ button { font: inherit; cursor: pointer; }
   border-color: rgba(250, 249, 247, 0.4);
 }
 .btn--ivory:hover { border-color: var(--ivory-50); background: rgba(250,249,247,0.07); }
+/* header Enquire button: switch to dark styling once the header goes solid, so it
+   doesn't disappear on the light scrolled background */
+.site-header.scrolled .header-cta .btn--ivory { --fg: var(--forest); border-color: rgba(51,51,51,0.35); }
+.site-header.scrolled .header-cta .btn--ivory:hover { border-color: var(--forest); background: rgba(51,51,51,0.05); }
 .btn--wa { --bg: var(--whatsapp); --fg: #fff; border-radius: 999px; }
 .btn--lg { height: 3.5rem; padding-inline: 2.5rem; }
 .btn--sm { height: 2.75rem; padding-inline: 1.4rem; font-size: 0.72rem; }
