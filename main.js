@@ -35,9 +35,11 @@
      3. In the Payment Link's settings, set the confirmation/redirect page
         to  payment-success.html  so clients land on the thank-you page. */
   var PAYMENTS = {
-    // TODO(owner): pegar aquí el Stripe Payment Link de PRODUCCIÓN (https://buy.stripe.com/...).
-    // Con el valor vacío, fillPay() desactiva el botón y muestra el aviso de configuración. NO usar enlaces test_.
-    stripeLink: "",
+    // ⚠️ TEMPORAL / MODO PRUEBA — este es un Stripe Payment Link de TEST (test_):
+    // NO cobra tarjetas reales (solo tarjetas de prueba de Stripe). Sirve para
+    // previsualizar el flujo. TODO(owner): sustituir por el link LIVE de producción
+    // (https://buy.stripe.com/... SIN "test_") ANTES de aceptar pagos reales.
+    stripeLink: "https://buy.stripe.com/test_5kQ9AS8kJ8Ctdi0ccYgrS00",
   };
 
   // TODO(owner): endpoint para recibir los leads del formulario por email
