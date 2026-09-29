@@ -65,10 +65,7 @@
       { label: "Cusco Essentials · 3 Days", href: "journey-cusco-essentials.html" },
     ] },
     { label: "Contact", href: "contact.html" },
-    // NOTE: Payments intentionally NOT in the primary nav. It is a service page
-    // for clients who already have an agreed itinerary — reachable only by direct
-    // URL, the booking-confirmation email, and a discreet "Already a client" link
-    // in the footer bottom bar (see buildFooter). Keep it out of NAV.
+    { label: "Payments", href: "payments.html" },
   ];
 
   /* ---------- journey catalogue ----------
@@ -374,7 +371,8 @@
           '<li><a href="experiences.html">Experiences</a></li>' +
           '<li><a href="journeys.html">Journeys</a></li>' +
           '<li><a href="story.html">Meet Patricia</a></li>' +
-          '<li><a href="contact.html">Contact</a></li></ul></div>' +
+          '<li><a href="contact.html">Contact</a></li>' +
+          '<li><a href="payments.html">Make a Payment</a></li></ul></div>' +
         '<div><h4>Connect</h4><ul>' +
           '<li><a href="' + CONTACT.waHref + '" target="_blank" rel="noopener">WhatsApp</a></li>' +
           (ig ? '<li><a href="' + ig + '" target="_blank" rel="noopener">Instagram</a></li>' : "") +
@@ -385,7 +383,7 @@
           // TODO(owner): falta el DOMICILIO SOCIAL registrado (registered office address),
           // requisito en Reino Unido. Añádelo a la línea de abajo cuando lo tengas.
           '<span class="footer__company">Perú Crafted Experiences Ltd &middot; Registered in England &amp; Wales &middot; Company No. 17362845</span></p>' +
-        '<ul class="footer__legal"><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li><li><a href="payments.html">Already a client? Make a payment</a></li></ul>' +
+        '<ul class="footer__legal"><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul>' +
       "</div></div>";
 
     var newsForm = f.querySelector(".js-news");
