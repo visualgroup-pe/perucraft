@@ -39,7 +39,7 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --gutter: clamp(1.25rem, 5vw, 6rem);
   --maxw: 1440px;
-  --header-h: 112px;
+  --header-h: 124px;
 }
 
 /* ---------- reset & base ---------- */
@@ -260,7 +260,7 @@ button { font: inherit; cursor: pointer; }
   line-height: 1;
   gap: 0.4rem;
 }
-.site-header .brand { position: relative; top: 10px; }
+.site-header .brand { position: relative; }
 .brand .chakana { width: 2.55rem; height: 2.55rem; transition: transform 0.7s var(--ease); }
 .brand:hover .chakana { transform: rotate(45deg); }
 .brand .word {
@@ -276,6 +276,7 @@ button { font: inherit; cursor: pointer; }
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--terracotta);
+  white-space: nowrap;
   transition: color 0.5s;
 }
 .site-header:not(.scrolled) .brand.on-hero .word { color: var(--ivory-50); }
