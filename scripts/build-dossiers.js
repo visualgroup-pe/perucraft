@@ -36,7 +36,7 @@ const JOURNEYS = [
   { slug: "grand-peru",         file: "journey-grand-peru.html" },
   { slug: "unforgettable-peru", file: "journey-unforgettable-peru.html" },
   { slug: "majestic-peru",      file: "journey-majestic-peru.html" },
-  { slug: "cusco-essentials",   file: "journey-cusco-essentials.html" },
+  { slug: "enigmatic-peru",     file: "journey-enigmatic-peru.html" },
 ];
 
 /* ---------- tiny HTML helpers ---------- */
