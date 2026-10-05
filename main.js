@@ -63,8 +63,8 @@
       { label: "The Crafted Collection", href: "journeys.html#collection" },
       { label: "Grand Peru · 20 Days", href: "journey-grand-peru.html" },
       { label: "Unforgettable Peru · 13 Days", href: "journey-unforgettable-peru.html" },
+      { label: "Enigmatic Peru · 12 Days", href: "journey-enigmatic-peru.html" },
       { label: "Majestic Peru · 10 Days", href: "journey-majestic-peru.html" },
-      { label: "Cusco Essentials · 3 Days", href: "journey-cusco-essentials.html" },
     ] },
     { label: "Contact", href: "contact.html" },
     { label: "Payments", href: "payments.html" },
@@ -77,7 +77,7 @@
     "grand-peru":         { name: "Grand Peru",         dur: "20 days", url: "journey-grand-peru.html",         img: "assets/img/1526392060635-9d6019884377" },
     "unforgettable-peru": { name: "Unforgettable Peru", dur: "13 days", url: "journey-unforgettable-peru.html", img: "assets/img/colca-canyon" },
     "majestic-peru":      { name: "Majestic Peru",      dur: "10 days", url: "journey-majestic-peru.html",      img: "assets/img/1580619305218-8423a7ef79b4" },
-    "cusco-essentials":   { name: "Cusco Essentials",   dur: "3 days",  url: "journey-cusco-essentials.html",   img: "assets/img/sacred-valley-vista" },
+    "enigmatic-peru":     { name: "Enigmatic Peru",     dur: "12 days", url: "journey-enigmatic-peru.html",     img: "assets/img/nazca-lines" },
   };
   function slugFromHref(href) { var m = /journey-([a-z-]+)\.html/.exec(href || ""); return m ? m[1] : ""; }
 
@@ -87,7 +87,7 @@
     "grand-peru":         ["lima-coast", "paracasbay", "arequipa-plaza", "colcacannn", "titicacabarco", "guacamayos"],
     "unforgettable-peru": ["lima-plaza", "nazca-lines", "arequipa-santacatalina", "titicaca-uros", "cusco", "1580619305218-8423a7ef79b4"],
     "majestic-peru":      ["lima-palms", "mirayana", "colcacannn", "cusco", "1526392060635-9d6019884377", "coloresmoun"],
-    "cusco-essentials":   ["valle-sagrado", "sacsayhuaman-1", "1580619305218-8423a7ef79b4"],
+    "enigmatic-peru":     ["lima-colonial", "paracasbay", "titicaca-uros", "cusco", "1526392060635-9d6019884377", "rainbow-mountain"],
   };
 
   /* ---------- wishlist storage (localStorage, no backend) ---------- */
