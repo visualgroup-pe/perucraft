@@ -11,9 +11,8 @@
 
    Run via  scripts/build-dossiers.sh  (or  node scripts/build-dossiers.js).
 
-   NOTE: prices and hotels are intentionally NOT in the PDF — they are
-   TODO(owner) on the site. The dossier shows "Tailored pricing" with the same
-   honest conditions as the pages. Nothing here is invented.
+   NOTE: the "from" price and its conditions are read from each page's
+   product-meta block; hotels are intentionally NOT in the PDF.
    ========================================================================== */
 "use strict";
 
@@ -61,6 +60,8 @@ function parseJourney(html) {
   const route = stripTags(grab(/<h1>[\s\S]*?<\/h1>\s*<p>([\s\S]*?)<\/p>/, html));
   const category = stripTags(grab(/<span class="product-meta__cat">([\s\S]*?)<\/span>/, html));
   const duration = stripTags(grab(/<span class="product-meta__dur">([\s\S]*?)<\/span>/, html));
+  const price = stripTags(grab(/<span class="product-meta__price">([\s\S]*?)<\/span>/, html)) || "Tailored pricing";
+  const cond = stripTags(grab(/<p class="product-meta__cond">([\s\S]*?)<\/p>/, html));
 
   // places (chips)
   const placesBlock = grab(/<nav class="places"[^>]*>([\s\S]*?)<\/nav>/, html);
@@ -78,7 +79,7 @@ function parseJourney(html) {
     desc: stripTags(grab(/<p class="itin__desc">([\s\S]*?)<\/p>/, li)),
   }));
 
-  return { name, route, category, duration, places, included, excluded, days };
+  return { name, route, category, duration, price, cond, places, included, excluded, days };
 }
 
 /* ---------- compose the print HTML ---------- */
@@ -137,8 +138,8 @@ function dossierHTML(j) {
   <div class="route">${esc(j.route)}</div>
 
   <div class="meta">
-    <span class="price">${esc(j.duration)} · Tailored pricing</span>
-    <div class="cond">Prices are per person, based on two travellers sharing a room. International flights are not included — we quote them separately according to your dates and preferences.</div>
+    <span class="price">${esc(j.duration)} · ${esc(j.price)}</span>
+    <div class="cond">${esc(j.cond)}</div>
   </div>
 
   ${places ? `<h2 class="sec">Places you'll visit</h2><div class="places">${places}</div>` : ""}
