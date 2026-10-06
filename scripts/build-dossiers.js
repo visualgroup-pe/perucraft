@@ -59,7 +59,7 @@ function grabLis(ulHtml) {
 function parseJourney(html) {
   const name = stripTags(grab(/<h1>([\s\S]*?)<\/h1>/, html));
   const route = stripTags(grab(/<h1>[\s\S]*?<\/h1>\s*<p>([\s\S]*?)<\/p>/, html));
-  const category = stripTags(grab(/<span class="product-meta__cat">([\s\S]*?)<\/span>/, html)) || "Private Journey";
+  const category = stripTags(grab(/<span class="product-meta__cat">([\s\S]*?)<\/span>/, html));
   const duration = stripTags(grab(/<span class="product-meta__dur">([\s\S]*?)<\/span>/, html));
 
   // places (chips)
@@ -132,7 +132,7 @@ function dossierHTML(j) {
     <div class="brand">Perú <small>Crafted Experiences</small></div>
   </header>
 
-  <div class="cat">${esc(j.category)}</div>
+  ${j.category ? `<div class="cat">${esc(j.category)}</div>` : ""}
   <h1 class="title">${esc(j.name)}</h1>
   <div class="route">${esc(j.route)}</div>
 
