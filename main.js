@@ -794,12 +794,10 @@
      Reusable three-pillar trust component, injected into any <section class="js-trust">
      placed before the closing CTA. Facts only, no adjectives-as-proof.
 
-     COLUMN 2 IS A DELIBERATELY MARKED, RESERVED SLOT.
-     TODO(owner): aquí va la PROTECCIÓN FINANCIERA REAL del paquete
-     (Package Travel Regulations 2018 — cuenta fiduciaria, bono, seguro de
-     insolvencia, o afiliación tipo ATOL/ABTA/TTA SÓLO si se posee de verdad).
-     NO añadir NINGUNA insignia de acreditación mientras no exista: mostrarla
-     sin serlo es fraude. Hasta entonces la casilla queda marcada y sin claim. */
+     Column 2 states the owner-confirmed basis for booking with confidence.
+     TODO(owner): si se obtiene protección financiera de paquete (Package
+     Travel Regulations 2018 — ATOL/ABTA/cuenta fiduciaria/seguro de
+     insolvencia), añadirla aquí. NO mostrar insignias que no se posean. */
   function trustCol(title, body, reserved) {
     return '<div class="trust__col' + (reserved ? ' trust__col--reserved' : '') + '">' +
       '<span class="trust__ic">' + chakana(true) + "</span>" +
@@ -814,8 +812,8 @@
       '<div class="container"><div class="grid grid-3 trust__grid">' +
         trustCol("Born in Peru, based in the UK",
           "Patricia is Peruvian and has lived in the UK for nearly 25 years, returning home regularly. The guides, cooks and families on your journey are people she knows in person.", false) +
-        trustCol("Financial protection",
-          "Details provided on enquiry.", true) +
+        trustCol("Book with confidence",
+          "We're a UK-registered travel company with appropriate business insurance and secure online payments.", false) +
         trustCol("Straight to your designer",
           "You plan directly with Patricia — the person who designs and runs your itinerary — never a call centre or a queue.", false) +
       "</div></div>";
