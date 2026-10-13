@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://visualgroup-pe.github.io/perucraft/sitemap.xml
+Sitemap: https://www.perucraftedexperiences.co.uk/sitemap.xml
