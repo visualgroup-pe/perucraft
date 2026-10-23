@@ -126,6 +126,8 @@
             </select>
           </div>
           <div class="field"><label for="f-msg">Tell us about the Peru you want to experience</label><textarea id="f-msg" name="message" rows="4" placeholder="Your tastes, pace, interests, must-sees, must-eats — anything that helps us craft your journey."></textarea></div>
+          <!-- honeypot anti-spam: invisible for people, bots fill it in -->
+          <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
           <label for="f-consent" style="display:flex;align-items:flex-start;gap:.55rem;text-transform:none;letter-spacing:0;font-size:.8rem;color:var(--charcoal-soft);line-height:1.5;cursor:pointer">
             <input type="checkbox" id="f-consent" name="consent" required style="width:auto;margin-top:.2rem;flex:none;accent-color:var(--forest)">
             <span>I have read the <a href="privacy.html" style="color:var(--terracotta);text-decoration:underline">privacy policy</a> and agree that Patricia may contact me about my journey.</span>

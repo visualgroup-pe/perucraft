@@ -42,13 +42,36 @@
     stripeLink: "https://buy.stripe.com/test_5kQ9AS8kJ8Ctdi0ccYgrS00",
   };
 
-  // TODO(owner): endpoint para recibir los leads del formulario por email
-  // (Formspree / Netlify Forms / Basin). Con el valor vacío se usa WhatsApp como fallback.
-  var FORM_ENDPOINT = "";
+  // Leads → Google Sheet. URL de la "Aplicación web" de Google Apps Script
+  // (termina en /exec). Recibe el formulario de contacto y las altas del
+  // newsletter y las guarda como filas en la hoja. Instalación paso a paso:
+  // docs/leads-google-sheets.md (código del script: scripts/google-sheets-leads.gs).
+  // TODO(owner): pegar aquí la URL /exec. Con el valor vacío se usan los
+  // endpoints de abajo o, si también están vacíos, WhatsApp / email como fallback.
+  var LEADS_SHEET_ENDPOINT = "";
 
-  // TODO(owner): endpoint del newsletter (Mailchimp / Buttondown / Formspree).
-  // Con el valor vacío, el bloque del newsletter NO se muestra (nada de altas falsas).
+  // Alternativas opcionales (Formspree / Netlify Forms / Basin / Mailchimp…).
+  // Solo se usan si LEADS_SHEET_ENDPOINT está vacío.
+  var FORM_ENDPOINT = "";
   var NEWSLETTER_ENDPOINT = "";
+
+  /* POST a lead as a simple (CORS-safelisted) urlencoded request, tagged with
+     its type and the page it came from. Resolves on a 2xx response whose JSON,
+     if any, does not report ok:false. */
+  function postLead(endpoint, type, formData) {
+    var body = new URLSearchParams();
+    formData.forEach(function (v, k) { if (typeof v === "string") body.append(k, v); });
+    body.append("type", type);
+    body.append("page", location.href.split("#")[0]);
+    return fetch(endpoint, { method: "POST", body: body }).then(function (r) {
+      if (!r.ok) throw new Error("bad status");
+      return r.text().then(function (t) {
+        var res = null;
+        try { res = JSON.parse(t); } catch (e) {}
+        if (res && res.ok === false) throw new Error(res.error || "rejected");
+      });
+    });
+  }
 
   var NAV = [
     { label: "Home", href: "index.html" },
@@ -358,7 +381,7 @@
           '<p class="footer__news-sub">Stories, tables and quiet corners worth the journey — a short note from Patricia every two weeks. No spam, unsubscribe anytime.</p>' +
         "</div>" +
         '<div class="footer__news-formwrap">' +
-          '<form class="footer__news js-news"><input type="email" name="email" required placeholder="Your email" aria-label="Email"><button type="submit">Subscribe</button></form>' +
+          '<form class="footer__news js-news"><input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true"><input type="email" name="email" required placeholder="Your email" aria-label="Email"><button type="submit">Subscribe</button></form>' +
           '<p class="footer__news-fine">We only use your email for the newsletter — see our <a href="privacy.html">privacy policy</a>.</p>' +
         "</div>" +
       "</div></div>" +
@@ -395,10 +418,10 @@
         var input = newsForm.querySelector('input[name="email"]');
         var email = input ? input.value : "";
         function done() { newsForm.innerHTML = '<p class="footer__news-ok">Thank you — you’re on the list.</p>'; }
-        // TODO(owner): define NEWSLETTER_ENDPOINT (Mailchimp / Buttondown / Formspree)
-        // to capture subscribers automatically. Until then, the subscription is sent
-        // to Patricia by email so no sign-up is lost.
-        if (!NEWSLETTER_ENDPOINT) {
+        if (newsForm.querySelector('input[name="website"]').value) { done(); return; } // honeypot
+        var endpoint = LEADS_SHEET_ENDPOINT || NEWSLETTER_ENDPOINT;
+        // No endpoint yet → the subscription is sent to Patricia by email so no sign-up is lost.
+        if (!endpoint) {
           window.location.href = "mailto:" + CONTACT.email +
             "?subject=" + encodeURIComponent("Newsletter subscription") +
             "&body=" + encodeURIComponent("Please add me to the biweekly newsletter: " + email);
@@ -408,8 +431,8 @@
         var btn = newsForm.querySelector("button");
         var lbl = btn ? btn.textContent : "";
         if (btn) { btn.disabled = true; btn.textContent = "…"; }
-        fetch(NEWSLETTER_ENDPOINT, { method: "POST", headers: { "Accept": "application/json" }, body: new FormData(newsForm) })
-          .then(function (r) { if (!r.ok) throw 0; done(); })
+        postLead(endpoint, "newsletter", new FormData(newsForm))
+          .then(done)
           .catch(function () {
             if (btn) { btn.disabled = false; btn.textContent = lbl; }
             var err = newsForm.querySelector(".js-news-err");
@@ -710,9 +733,12 @@
       e.preventDefault();
       var d = new FormData(form); // includes the required consent checkbox
       var wa = waUrl(d);
+      var thanks = '<p style="font-size:.9rem;color:var(--forest);font-weight:500">Thank you — your enquiry is on its way. I&rsquo;ll be in touch personally.</p><p style="font-size:.82rem;color:var(--charcoal-soft);margin-top:.4rem">Prefer to chat now? <a ' + LINK + ' href="' + wa + '" target="_blank" rel="noopener">Message me on WhatsApp</a>.</p>';
+      if (d.get("website")) { form.reset(); feedback(thanks); return; } // honeypot: silently drop bots
+      var endpoint = LEADS_SHEET_ENDPOINT || FORM_ENDPOINT;
 
       // No endpoint configured yet → keep the WhatsApp behaviour as a fallback.
-      if (!FORM_ENDPOINT) {
+      if (!endpoint) {
         window.open(wa, "_blank", "noopener");
         feedback('<p style="font-size:.85rem;color:var(--charcoal-soft)">Opening WhatsApp… if nothing happens, <a ' + LINK + ' href="' + wa + '" target="_blank" rel="noopener">tap here to send your enquiry</a>.</p>');
         return;
@@ -722,15 +748,10 @@
       var label = btn ? btn.innerHTML : "";
       if (btn) { btn.disabled = true; btn.innerHTML = "Sending…"; }
 
-      fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: { "Accept": "application/json" },
-        body: d,
-      }).then(function (r) {
-        if (!r.ok) throw new Error("bad status");
+      postLead(endpoint, "enquiry", d).then(function () {
         form.reset();
         if (btn) { btn.disabled = false; btn.innerHTML = label; }
-        feedback('<p style="font-size:.9rem;color:var(--forest);font-weight:500">Thank you — your enquiry is on its way. I&rsquo;ll be in touch personally.</p><p style="font-size:.82rem;color:var(--charcoal-soft);margin-top:.4rem">Prefer to chat now? <a ' + LINK + ' href="' + wa + '" target="_blank" rel="noopener">Message me on WhatsApp</a>.</p>');
+        feedback(thanks);
       }).catch(function () {
         if (btn) { btn.disabled = false; btn.innerHTML = label; }
         feedback('<p style="font-size:.85rem;color:var(--terracotta-deep)">Something went wrong sending your enquiry. Please <a ' + LINK + ' href="' + wa + '" target="_blank" rel="noopener">message me on WhatsApp</a> or email <a ' + LINK + ' href="mailto:' + CONTACT.email + '">' + CONTACT.email + '</a>.</p>');
