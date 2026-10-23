@@ -1142,3 +1142,6 @@ button { font: inherit; cursor: pointer; }
 .jcard__foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .price-from { display: inline-flex; align-items: baseline; gap: .4rem; font-size: .64rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(241,236,225,.6); }
 .price-from b { font-family: var(--font-serif); font-size: 1.15rem; letter-spacing: 0; text-transform: none; font-weight: 400; color: var(--gold-soft); }
+
+/* honeypot anti-spam field (forms) — off-screen, never shown to people */
+.hp-field { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
