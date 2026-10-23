@@ -46,9 +46,9 @@
   // (termina en /exec). Recibe el formulario de contacto y las altas del
   // newsletter y las guarda como filas en la hoja. Instalación paso a paso:
   // docs/leads-google-sheets.md (código del script: scripts/google-sheets-leads.gs).
-  // TODO(owner): pegar aquí la URL /exec. Con el valor vacío se usan los
-  // endpoints de abajo o, si también están vacíos, WhatsApp / email como fallback.
-  var LEADS_SHEET_ENDPOINT = "";
+  // Si se vacía, se usan los endpoints de abajo o, si también están vacíos,
+  // WhatsApp / email como fallback.
+  var LEADS_SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbzVkbk8Mw6vB1pGG2uQlfMoBaBc7ZbwyEFc1Fto9pMf7nGv0wxyi8T0WkBfoNDVb3MT/exec";
 
   // Alternativas opcionales (Formspree / Netlify Forms / Basin / Mailchimp…).
   // Solo se usan si LEADS_SHEET_ENDPOINT está vacío.
