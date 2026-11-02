@@ -22,7 +22,7 @@
     greeting:
       "Hello, I'm Patricia. I'd be delighted to help you plan your journey — do say hello whenever suits you.",
     portrait:
-      "assets/img/1523761415282-2106778cfb5a.jpeg",
+      "/assets/img/1523761415282-2106778cfb5a.jpeg",
   };
 
   /* ---------- payments ----------
@@ -74,35 +74,35 @@
   }
 
   var NAV = [
-    { label: "Home", href: "index.html" },
-    { label: "The Story", href: "story.html" },
-    { label: "Experiences", href: "experiences.html", children: [
-      { label: "Culture", href: "experiences.html#culture" },
-      { label: "Gastronomy", href: "experiences.html#gastronomy" },
-      { label: "Crafted Travel", href: "experiences.html#crafted" },
-      { label: "Day Experiences from Lima", href: "experiences.html#day-experiences" },
+    { label: "Home", href: "/" },
+    { label: "The Story", href: "/story" },
+    { label: "Experiences", href: "/experiences", children: [
+      { label: "Culture", href: "/experiences#culture" },
+      { label: "Gastronomy", href: "/experiences#gastronomy" },
+      { label: "Crafted Travel", href: "/experiences#crafted" },
+      { label: "Day Experiences from Lima", href: "/experiences#day-experiences" },
     ] },
-    { label: "Journeys", href: "journeys.html", children: [
-      { label: "The Crafted Collection", href: "journeys.html#collection" },
-      { label: "Grand Peru · 20 Days", href: "journey-grand-peru.html" },
-      { label: "Unforgettable Peru · 13 Days", href: "journey-unforgettable-peru.html" },
-      { label: "Enigmatic Peru · 12 Days", href: "journey-enigmatic-peru.html" },
-      { label: "Majestic Peru · 10 Days", href: "journey-majestic-peru.html" },
+    { label: "Journeys", href: "/journeys", children: [
+      { label: "The Crafted Collection", href: "/journeys#collection" },
+      { label: "Grand Peru · 20 Days", href: "/journey-grand-peru" },
+      { label: "Unforgettable Peru · 13 Days", href: "/journey-unforgettable-peru" },
+      { label: "Enigmatic Peru · 12 Days", href: "/journey-enigmatic-peru" },
+      { label: "Majestic Peru · 10 Days", href: "/journey-majestic-peru" },
     ] },
-    { label: "Contact", href: "contact.html" },
-    { label: "Payments", href: "payments.html" },
+    { label: "Contact", href: "/contact" },
+    { label: "Payments", href: "/payments" },
   ];
 
   /* ---------- journey catalogue ----------
      Canonical data for the four real itineraries, shared by the enquiry-context
      banner (contact.html), the wishlist toggles and the saved-journeys view. */
   var JOURNEYS_INFO = {
-    "grand-peru":         { name: "Grand Peru",         dur: "20 days", url: "journey-grand-peru.html",         img: "assets/img/1526392060635-9d6019884377" },
-    "unforgettable-peru": { name: "Unforgettable Peru", dur: "13 days", url: "journey-unforgettable-peru.html", img: "assets/img/colca-canyon" },
-    "majestic-peru":      { name: "Majestic Peru",      dur: "10 days", url: "journey-majestic-peru.html",      img: "assets/img/1580619305218-8423a7ef79b4" },
-    "enigmatic-peru":     { name: "Enigmatic Peru",     dur: "12 days", url: "journey-enigmatic-peru.html",     img: "assets/img/nazca-lines" },
+    "grand-peru":         { name: "Grand Peru",         dur: "20 days", url: "/journey-grand-peru",         img: "/assets/img/1526392060635-9d6019884377" },
+    "unforgettable-peru": { name: "Unforgettable Peru", dur: "13 days", url: "/journey-unforgettable-peru", img: "/assets/img/colca-canyon" },
+    "majestic-peru":      { name: "Majestic Peru",      dur: "10 days", url: "/journey-majestic-peru",      img: "/assets/img/1580619305218-8423a7ef79b4" },
+    "enigmatic-peru":     { name: "Enigmatic Peru",     dur: "12 days", url: "/journey-enigmatic-peru",     img: "/assets/img/nazca-lines" },
   };
-  function slugFromHref(href) { var m = /journey-([a-z-]+)\.html/.exec(href || ""); return m ? m[1] : ""; }
+  function slugFromHref(href) { var m = /journey-([a-z-]+?)(?:\.html)?(?:[?#]|$)/.exec(href || ""); return m ? m[1] : ""; }
 
   /* Extra place images cycled inside each journey card (the card's base image is
      slide 0; these follow). Only slugs whose .jpg exists in assets/img. */
@@ -167,8 +167,13 @@
   };
 
   /* ---------- current page ---------- */
-  var path = location.pathname.split("/").pop() || "index.html";
-  if (path === "") path = "index.html";
+  // Clean URLs: "/" for home, "/story", "/journey-grand-peru"… (an old
+  // "/story.html" address is normalised to the same value).
+  function pageOf(href) {
+    var p = String(href || "").split(/[?#]/)[0].split("/").pop().replace(/\.html$/, "");
+    return p && p !== "index" ? "/" + p : "/";
+  }
+  var path = pageOf(location.pathname);
 
   /* ---------- reduced motion ---------- */
   var REDUCE = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -176,7 +181,7 @@
   /* ---------- brand lockup ---------- */
   function brandHTML(cls) {
     return (
-      '<a class="brand ' + (cls || "") + '" href="index.html" aria-label="Perú Crafted Experiences — home">' +
+      '<a class="brand ' + (cls || "") + '" href="/" aria-label="Perú Crafted Experiences — home">' +
       '<span class="chakana chakana--grad">' + chakana(true) + "</span>" +
       '<span class="word">Perú</span>' +
       '<span class="sub">Crafted Experiences</span>' +
@@ -237,7 +242,7 @@
       '<nav class="nav on-hero" aria-label="Primary">' + navLinks + "</nav>" +
       '<div class="header-actions">' +
         '<div class="header-social on-hero">' + socialLinks("header-social__a") + "</div>" +
-        '<a class="header-saved on-hero" href="saved.html" aria-label="Saved journeys" title="Saved journeys">' + IC.heart + '<span class="header-saved__n">0</span></a>' +
+        '<a class="header-saved on-hero" href="/saved" aria-label="Saved journeys" title="Saved journeys">' + IC.heart + '<span class="header-saved__n">0</span></a>' +
         '<div class="header-cta"><a class="btn btn--sm btn--ivory js-enquire" href="' + CONTACT.waHref + '" target="_blank" rel="noopener">Enquire Now</a></div>' +
         '<a class="header-wa on-hero js-wa" href="' + CONTACT.waHref + '" target="_blank" rel="noopener" aria-label="Enquire on WhatsApp">' + IC.wa + "</a>" +
         '<button class="menu-btn on-hero" aria-label="Open menu" aria-expanded="false">' + IC.menu + "</button>" +
@@ -245,7 +250,7 @@
       "</div>" +
       '<div class="mobile-menu">' +
       mobileLinks +
-      '<a class="m-saved" href="saved.html">' + IC.heart + ' Saved journeys (<span class="header-saved__n">0</span>)</a>' +
+      '<a class="m-saved" href="/saved">' + IC.heart + ' Saved journeys (<span class="header-saved__n">0</span>)</a>' +
       '<div class="m-social">' + socialLinks("m-social__a") + "</div>" +
       '<a class="btn" href="' + CONTACT.waHref + '" target="_blank" rel="noopener">Enquire Now</a>' +
       "</div>";
@@ -382,7 +387,7 @@
         "</div>" +
         '<div class="footer__news-formwrap">' +
           '<form class="footer__news js-news"><input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true"><input type="email" name="email" required placeholder="Your email" aria-label="Email"><button type="submit">Subscribe</button></form>' +
-          '<p class="footer__news-fine">We only use your email for the newsletter — see our <a href="privacy.html">privacy policy</a>.</p>' +
+          '<p class="footer__news-fine">We only use your email for the newsletter — see our <a href="/privacy">privacy policy</a>.</p>' +
         "</div>" +
       "</div></div>" +
       '<div class="container footer__grid footer__grid--no-news">' +
@@ -392,12 +397,12 @@
           (ig ? '<a class="footer__social" href="' + ig + '" target="_blank" rel="noopener" aria-label="Instagram">' + IC.insta + "</a>" : "") +
         "</div>" +
         '<div><h4>Explore</h4><ul>' +
-          '<li><a href="story.html">The Story</a></li>' +
-          '<li><a href="experiences.html">Experiences</a></li>' +
-          '<li><a href="journeys.html">Journeys</a></li>' +
-          '<li><a href="story.html">Meet Patricia</a></li>' +
-          '<li><a href="contact.html">Contact</a></li>' +
-          '<li><a href="payments.html">Make a Payment</a></li></ul></div>' +
+          '<li><a href="/story">The Story</a></li>' +
+          '<li><a href="/experiences">Experiences</a></li>' +
+          '<li><a href="/journeys">Journeys</a></li>' +
+          '<li><a href="/story">Meet Patricia</a></li>' +
+          '<li><a href="/contact">Contact</a></li>' +
+          '<li><a href="/payments">Make a Payment</a></li></ul></div>' +
         '<div><h4>Connect</h4><ul>' +
           '<li><a href="' + CONTACT.waHref + '" target="_blank" rel="noopener">WhatsApp</a></li>' +
           (ig ? '<li><a href="' + ig + '" target="_blank" rel="noopener">Instagram</a></li>' : "") +
@@ -408,7 +413,7 @@
           // TODO(owner): falta el DOMICILIO SOCIAL registrado (registered office address),
           // requisito en Reino Unido. Añádelo a la línea de abajo cuando lo tengas.
           '<span class="footer__company">Perú Crafted Experiences Ltd &middot; Registered in England &amp; Wales &middot; Company No. 17362845</span></p>' +
-        '<ul class="footer__legal"><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul>' +
+        '<ul class="footer__legal"><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms &amp; Conditions</a></li></ul>' +
       "</div></div>";
 
     var newsForm = f.querySelector(".js-news");
@@ -806,7 +811,7 @@
         var m = form.month.value, t = form.travellers.value;
         if (m) qs.push("month=" + encodeURIComponent(m));
         if (t) qs.push("travellers=" + encodeURIComponent(t));
-        location.href = "contact.html" + (qs.length ? "?" + qs.join("&") : "");
+        location.href = "/contact" + (qs.length ? "?" + qs.join("&") : "");
       });
     });
   }
@@ -864,7 +869,7 @@
         var im = document.createElement("img");
         im.className = "jcard__slide";
         im.alt = "";
-        im.setAttribute("data-src", "assets/img/" + sl + ".jpg");
+        im.setAttribute("data-src", "/assets/img/" + sl + ".jpg");
         im.loading = "lazy";
         if (veil) media.insertBefore(im, veil); else media.appendChild(im);
         slides.push(im);
@@ -952,7 +957,7 @@
           '<div class="center" style="max-width:34rem;margin-inline:auto">' +
             '<p class="lede">You haven&rsquo;t saved any journeys yet.</p>' +
             '<p class="muted" style="margin:.75rem 0 1.5rem">Tap the heart on any journey to keep it here while you decide.</p>' +
-            '<a class="btn btn--gold" href="journeys.html">Browse the journeys</a>' +
+            '<a class="btn btn--gold" href="/journeys">Browse the journeys</a>' +
           "</div>";
         return;
       }
@@ -972,7 +977,7 @@
       var wa = "https://wa.me/" + WA_DIGITS + "?text=" + encodeURIComponent(lines.join("\n"));
       var cta =
         '<div class="center reveal" style="margin-top:2.5rem">' +
-          '<a class="btn btn--gold btn--lg" href="contact.html?journeys=' + saved.join(",") + '">Enquire about these journeys ' + IC.arrow + "</a>" +
+          '<a class="btn btn--gold btn--lg" href="/contact?journeys=' + saved.join(",") + '">Enquire about these journeys ' + IC.arrow + "</a>" +
           '<p class="mt-3" style="font-size:.9rem;color:var(--charcoal-soft)">Prefer WhatsApp? <a class="tlink" style="display:inline" href="' + wa + '" target="_blank" rel="noopener">Send Patricia your shortlist</a></p>' +
         "</div>";
       wrap.innerHTML = '<div class="grid grid-2">' + cards + "</div>" + cta;
@@ -991,7 +996,7 @@
     return m ? MONTHS[parseInt(m[2], 10) - 1] + " " + m[1] : v;
   }
   function initEnquiryContext() {
-    if (path !== "contact.html") return;
+    if (path !== "/contact") return;
     var form = document.querySelector(".js-enquiry-form");
     if (!form) return;
     var params = new URLSearchParams(location.search);
@@ -1073,8 +1078,9 @@
       if (!href || a.target === "_blank" || a.hasAttribute("download")) return;
       if (/^(https?:|mailto:|tel:)/.test(href)) return;
       if (href.charAt(0) === "#") return;
-      if (!/\.html(\?|#|$)/.test(href)) return; // only internal .html pages
-      if (href.split("#")[0] === path) return;  // same page → no transition/overlay
+      // only internal pages: "/", "/story", "/contact?journey=…" (not "//host" or files like .pdf)
+      if (!/^\/(?!\/)[a-z0-9-]*(\.html)?([?#]|$)/i.test(href)) return;
+      if (pageOf(href) === path && !/\?/.test(href)) return;  // same page → no transition/overlay
       e.preventDefault();
       overlay.classList.add("active");
       var done = false;
