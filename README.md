@@ -8,8 +8,9 @@ Multi-page site in plain **HTML, CSS and JavaScript** (no build step). Open
 `contact.html` · `privacy.html` · `terms.html`
 
 ## Run locally
-Just open `index.html` in a browser. (Everything — images, styles, scripts — is
-included, so it works offline.)
+Links use clean URLs (`/story`, `/journey-grand-peru` — no `.html`), as GitHub
+Pages serves them. Preview with a local server rather than opening the file:
+`npx serve .` (serves `/story` from `story.html`), then open the URL it prints.
 
 ## Publish to GitHub Pages (auto-deploy)
 1. Create an **empty** repo on GitHub (e.g. `visualgroup-pe/perucraft`) — no
